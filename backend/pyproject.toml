@@ -1,0 +1,48 @@
+[project]
+name = "atlas-backend"
+version = "0.1.0"
+requires-python = ">=3.13,<3.14"
+
+# Only what the onboarding workshop needs. The real ATLAS stack (SQLAlchemy,
+# asyncpg, Alembic, pydantic-settings) gets added back when there is code
+# using it -- a smaller lockfile means a much faster container build.
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "pydantic",
+    "httpx",          # used by fastapi.testclient
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+# FURB157 wants Decimal(200) rather than Decimal("200") for whole numbers. It
+# is right that both are exact, but the workshop teaches one habit -- money is
+# always built from a string -- and an exception for round numbers is exactly
+# the kind of detail that turns into Decimal(0.1) later.
+ignore = ["FURB157"]
+
+[tool.ruff.lint.isort]
+# There are no __init__.py files, so tell ruff that Workshop is our own code
+# and not a third-party package.
+known-first-party = ["Workshop"]
+
+[tool.pytest.ini_options]
+testpaths = ["Workshop"]
+# Put backend/ on the import path so `from Workshop.main import app` resolves
+# no matter which directory pytest is started from.
+pythonpath = ["."]
+# Keeps test output clean. These warnings come from library internals, never
+# from your code.
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::starlette.exceptions.StarletteDeprecationWarning",
+]
