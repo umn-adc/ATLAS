@@ -4,12 +4,12 @@ WORKDIR /app
 
 RUN pip install uv
 
-COPY pyproject.toml ./
+COPY backend/pyproject.toml backend/uv.lock ./
 
-RUN uv sync
+RUN uv sync --locked
 
-COPY . .
+COPY backend/ .
 
 EXPOSE 8000
 
-CMD ["uv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uv", "run", "uvicorn", "Workshop.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
