@@ -6,11 +6,11 @@ TODO: 3 steps
 3. @app.get("/health") that returns {"status": "ok"}
 
 Run: uvicorn Workshop.main:app --reload
-Test: pytest
+Test: run `pytest -v --tb=no` from atlas/backend
 """
 
 from fastapi import FastAPI
 
 from Workshop.router import router
 
-# your code here
+# your code here...
