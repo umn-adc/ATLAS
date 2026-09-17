@@ -1,6 +1,6 @@
 # Options Pricing Service
 
-Calculate European option prices, Greeks, and implied volatility using Black-Scholes. Each file in `pricing/` has function stubs with docstrings—implement the math, run the tests, submit a PR.
+Calculate European option prices, Greeks, and implied volatility using Black-Scholes. Each file in `pricing/` has function stubs with docstrings
 
 ```bash
 uv run pytest services/options_pricing/tests/test_payoff.py -v  # run one test file
