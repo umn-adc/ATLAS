@@ -17,6 +17,9 @@ dependencies = [
 dev = [
     "pytest",
     "ruff",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
 ]
 
 [tool.ruff]
@@ -28,15 +31,15 @@ target-version = "py313"
 # is right that both are exact, but the workshop teaches one habit -- money is
 # always built from a string -- and an exception for round numbers is exactly
 # the kind of detail that turns into Decimal(0.1) later.
-ignore = ["FURB157"]
+# DTZ001/DTZ003: Allow naive datetimes in tests and UTC-centric code.
+ignore = ["FURB157", "DTZ001", "DTZ003"]
 
 [tool.ruff.lint.isort]
-# There are no __init__.py files, so tell ruff that Workshop is our own code
-# and not a third-party package.
-known-first-party = ["Workshop"]
+# Tell ruff which modules are our own code and not third-party packages.
+known-first-party = ["Workshop", "services"]
 
 [tool.pytest.ini_options]
-testpaths = ["Workshop"]
+testpaths = ["Workshop", "services"]
 # Put backend/ on the import path so `from Workshop.main import app` resolves
 # no matter which directory pytest is started from.
 pythonpath = ["."]
