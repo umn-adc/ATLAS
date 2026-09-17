@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Query
 
 from Workshop.schemas import Pet, PetCreate
 
+
 router = APIRouter()
 
 pets: dict[int, Pet] = {}
@@ -28,6 +29,12 @@ def create_pet(data: PetCreate) -> Pet:
     4. return pet
     """
     global next_id  # global variable that can be modified from any scope
+    pet = Pet(next_id, data.name, data.animal, data.age)
+
+    pets[next_id] = pet
+    next_id += 1
+    return pet
+    
 
 
 @router.get("/pets")
@@ -45,6 +52,11 @@ def get_pet(pet_id: int) -> Pet:
     2. return pets[pet_id]
     """
     # your code here
+    res = pets.get(pet_id, -1)
+    if res == -1:
+        raise HTTPException(status_code=404, detail = "Not found")
+    else:
+        return res
 
 
 @router.delete("/pets/{pet_id}")
@@ -57,6 +69,12 @@ def delete_pet(pet_id: int) -> dict:
     3. return {"deleted": pet_id}
     """
     # your code here
+    res = pets.get(pet_id, -1)
+    if res == -1:
+        raise HTTPException(status_code=404, detail = "Not found")
+    else:
+        removed_pet = pets.pop(pet_id)
+        return removed_pet
 
 
 # HARD: Filter with query params + Pydantic field_validator
@@ -79,3 +97,16 @@ def search_pets(
     Example: /pets/search/?animal=dog&min_age=2
     """
     # your code here
+    result = list(pets.values())
+
+    for pet in pets:
+        if animal:
+            result = {pet for pet in result.items() if pet.animal == animal}
+
+        if min_age:
+            result = {pet  for pet in result.items() if pet.age >= min_age}
+
+        if max_age:
+            result = {pet for pet in result.items() if pet.age <= max_age}
+    return result
+

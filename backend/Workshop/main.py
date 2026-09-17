@@ -14,3 +14,11 @@ from fastapi import FastAPI
 from Workshop.router import router
 
 # your code here...
+
+app = FastAPI()
+
+app.include_router(router)
+
+@app.get("/health")
+def get_health():
+    return {"status": "ok"}
