@@ -1,6 +1,7 @@
+"""Schemas for views module."""
+
 from pydantic import BaseModel, Field
-from uuid import UUID
-from typing import Any
+
 
 class CardConfig(BaseModel):
     id: str

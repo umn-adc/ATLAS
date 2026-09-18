@@ -2,8 +2,8 @@
 
 import pytest
 
-from services.options_analytics.pricing.moneyness import classify_moneyness
-from services.options_analytics.schemas import Moneyness, OptionType
+from packages.options_analytics.pricing.moneyness import classify_moneyness
+from packages.options_analytics.schemas import Moneyness, OptionType
 
 
 def test_call_itm():

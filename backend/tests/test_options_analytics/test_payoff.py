@@ -2,7 +2,7 @@
 
 import pytest
 
-from services.options_analytics.pricing.payoff import call_payoff, put_payoff
+from packages.options_analytics.pricing.payoff import call_payoff, put_payoff
 
 
 def test_call_itm():
