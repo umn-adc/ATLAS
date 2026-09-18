@@ -1,6 +1,6 @@
 """Implied volatility solver."""
 
-from services.options_analytics.schemas import OptionType
+from packages.options_analytics.schemas import OptionType
 
 
 class ImpliedVolatilityError(Exception):

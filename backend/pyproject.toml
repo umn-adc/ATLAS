@@ -36,10 +36,10 @@ ignore = ["FURB157", "DTZ001", "DTZ003"]
 
 [tool.ruff.lint.isort]
 # Tell ruff which modules are our own code and not third-party packages.
-known-first-party = ["Workshop", "services"]
+known-first-party = ["Workshop", "packages", "app", "tests"]
 
 [tool.pytest.ini_options]
-testpaths = ["Workshop", "services"]
+testpaths = ["tests", "Workshop"]
 # Put backend/ on the import path so `from Workshop.main import app` resolves
 # no matter which directory pytest is started from.
 pythonpath = ["."]

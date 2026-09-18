@@ -1,6 +1,6 @@
 """Option moneyness classification."""
 
-from services.options_analytics.schemas import Moneyness, OptionType
+from packages.options_analytics.schemas import Moneyness, OptionType
 
 DEFAULT_ATM_TOLERANCE: float = 0.005  # 0.5%
 

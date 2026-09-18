@@ -2,8 +2,8 @@
 
 import pytest
 
-from services.options_analytics.pricing.greeks import delta, gamma, theta, vega
-from services.options_analytics.schemas import OptionType
+from packages.options_analytics.pricing.greeks import delta, gamma, theta, vega
+from packages.options_analytics.schemas import OptionType
 
 S, K, T, r, vol = 100.0, 100.0, 1.0, 0.05, 0.20
 

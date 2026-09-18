@@ -4,7 +4,7 @@ import math
 
 import pytest
 
-from services.options_analytics.pricing.black_scholes import black_scholes_call, black_scholes_put
+from packages.options_analytics.pricing.black_scholes import black_scholes_call, black_scholes_put
 
 # ATM: S=100, K=100, T=1, r=0.05, σ=0.20 → Call≈10.45, Put≈5.57
 

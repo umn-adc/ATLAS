@@ -3,7 +3,7 @@
 Conventions: prices in currency, time in years, vol as decimal (0.20 = 20%).
 """
 
-from services.options_analytics.schemas import OptionType
+from packages.options_analytics.schemas import OptionType
 
 
 def delta(

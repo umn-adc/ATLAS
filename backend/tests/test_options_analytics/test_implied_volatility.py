@@ -2,11 +2,11 @@
 
 import pytest
 
-from services.options_analytics.pricing.implied_volatility import (
+from packages.options_analytics.pricing.implied_volatility import (
     ImpliedVolatilityError,
     implied_volatility,
 )
-from services.options_analytics.schemas import OptionType
+from packages.options_analytics.schemas import OptionType
 
 # ATM call at 20% vol ≈ 10.45
 
