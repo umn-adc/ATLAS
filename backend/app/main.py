@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.modules.strategies.router import router as strategy_router
+from app.modules.views.router import router as views_router
 
 
 # Use lifespan functions to run code at app startup and shutdown
@@ -27,6 +28,12 @@ def create_app() -> FastAPI:
         strategy_router,
         prefix="/api/strategies",
         tags=["Strategies"],
+    )
+
+    app.include_router(
+        views_router,
+        prefix="/api/views",
+        tags=["Views"],
     )
 
     @app.get("/health", tags=["Health"])
