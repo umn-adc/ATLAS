@@ -16,6 +16,7 @@ from packages.options_analytics.pricing.moneyness import classify_moneyness
 from packages.options_analytics.pricing.payoff import call_payoff, put_payoff
 
 __all__ = [
+    "ImpliedVolatilityError",
     "black_scholes_call",
     "black_scholes_put",
     "call_payoff",
@@ -23,7 +24,6 @@ __all__ = [
     "delta",
     "gamma",
     "implied_volatility",
-    "ImpliedVolatilityError",
     "put_payoff",
     "theta",
     "vega",

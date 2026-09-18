@@ -14,6 +14,7 @@ async def lifespan(app: FastAPI):
 
     print("ATLAS backend stopping")
 
+
 def create_app() -> FastAPI:
     app = FastAPI(
         title="ATLAS API",
@@ -34,7 +35,7 @@ def create_app() -> FastAPI:
 
     return app
 
+
 # ---
 
 app = create_app()
-
