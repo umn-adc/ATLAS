@@ -15,6 +15,7 @@ class CardConfig(BaseModel):
     w: int = Field(ge=0)
     h: int = Field(ge=0)
     config: dict[str, Any] = {}
+
 class ViewLayout(BaseModel):
     cards: list[CardConfig] = []
 
@@ -25,6 +26,7 @@ class ViewCreate(BaseModel):
 class ViewUpdate(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=100)
     layout: dict | None = None
+
 class ViewResponse(BaseModel):
     id: UUID
     owner_id: UUID
