@@ -31,7 +31,7 @@ dev = [
 line-length = 100
 target-version = "py313"
 # Workshop is a teaching module with intentional incomplete code for students
-extend-exclude = ["Workshop"]
+extend-exclude = ["Workshop", "alembic/versions"]
 
 [tool.ruff.lint]
 # FURB157 wants Decimal(200) rather than Decimal("200") for whole numbers. It
