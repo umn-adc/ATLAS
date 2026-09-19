@@ -6,6 +6,7 @@ from app.database import init_db
 from app.modules.strategies.router import router as strategy_router
 from app.modules.views.router import router as views_router
 
+
 # Use lifespan function to run code at app startup and shutdown
 @asynccontextmanager
 async def lifespan(app: FastAPI):
