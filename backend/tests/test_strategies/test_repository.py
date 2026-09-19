@@ -67,6 +67,7 @@ async def test_list_by_owner_excludes_archived(db_session):
     archived = await repo.create(owner_id, "Archived", None)
     # Manually archive one
     from datetime import datetime, timezone
+
     archived.archived_at = datetime.now(timezone.utc)
     await repo.update(archived)
 
