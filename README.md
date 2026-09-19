@@ -1,5 +1,10 @@
 # ATLAS
 
+[![Lint & Format](https://github.com/umn-adc/ATLAS/actions/workflows/python-ci.yml/badge.svg?event=push&branch=main&job=lint)](https://github.com/umn-adc/ATLAS/actions/workflows/python-ci.yml)
+[![Type Check](https://github.com/umn-adc/ATLAS/actions/workflows/python-ci.yml/badge.svg?event=push&branch=main&job=typecheck)](https://github.com/umn-adc/ATLAS/actions/workflows/python-ci.yml)
+[![Tests](https://github.com/umn-adc/ATLAS/actions/workflows/python-ci.yml/badge.svg?event=push&branch=main&job=test)](https://github.com/umn-adc/ATLAS/actions/workflows/python-ci.yml)
+[![Migrations](https://github.com/umn-adc/ATLAS/actions/workflows/python-ci.yml/badge.svg?event=push&branch=main&job=migrations)](https://github.com/umn-adc/ATLAS/actions/workflows/python-ci.yml)
+
 **A self-hosted platform for developing, deploying, and monitoring algorithmic trading strategies.**
 
 The platform is designed to run on a local machine or server, with team members accessing the same instance through their browsers.
@@ -37,6 +42,18 @@ ATLAS is developed by members of the University of Minnesota App Developers Club
 6. Address review feedback before merging.
 
 Keep pull requests focused on a single issue whenever possible.
+
+See the [GitHub Issues](https://github.com/orgs/umn-adc/projects/12/views/1) for current work.
+
+Run these from `backend/` to ensure you pass GitHub Actions:
+
+```bash
+uv run ruff format .                              # Auto-format code
+uv run ruff check --fix                           # Lint + auto-fix issues
+uv run pyright                                    # Type check
+uv run pytest                                     # Run tests
+uv run alembic upgrade head && uv run alembic check  # Verify migrations in sync
+```
 
 ## Documentation
 
