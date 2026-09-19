@@ -31,9 +31,11 @@ class Strategy(BaseModel):
 # 1. A strategy's name and description can change in isolation.
 # 2. This can represent a row in a different database table.
 
+
 class StrategyVersionCreate(BaseModel):
     commit_hash: str = Field(min_length=1)
     entrypoint: str = Field(min_length=1)
+    artifact_path: str = Field(min_length=1)
     parameters: dict[str, Any] = Field(default_factory=dict)
 
 
@@ -42,6 +44,7 @@ class StrategyVersion(BaseModel):
     strategy_id: UUID
     commit_hash: str
     entrypoint: str
+    artifact_path: str
     parameters: dict[str, Any] = Field(default_factory=dict)
     created_at: datetime
 
