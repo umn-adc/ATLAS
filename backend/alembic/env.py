@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 
@@ -16,6 +17,10 @@ from app.modules.views.models import View  # noqa: F401 - import so Alembic sees
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+# Override with DATABASE_URL env var if set (for CI)
+if database_url := os.getenv("DATABASE_URL"):
+    config.set_main_option("sqlalchemy.url", database_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
