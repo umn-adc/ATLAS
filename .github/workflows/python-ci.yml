@@ -81,3 +81,42 @@ jobs:
 
       - name: Run tests
         run: uv run pytest --tb=short -q
+
+  migrations:
+    name: Migration Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: Set up Python
+        run: uv python install 3.13
+
+      - name: Install dependencies
+        run: uv sync --locked --group dev
+
+      - name: Check for pending migrations
+        run: |
+          uv run alembic upgrade head
+          uv run alembic check || {
+            echo ""
+            echo "=========================================="
+            echo "MIGRATION CHECK FAILED"
+            echo "=========================================="
+            echo "Your models are out of sync with migrations."
+            echo ""
+            echo "To fix, run locally:"
+            echo "  cd backend"
+            echo "  uv run alembic revision --autogenerate -m \"describe your change\""
+            echo "  uv run alembic upgrade head"
+            echo ""
+            echo "Then commit the new migration file."
+            echo "=========================================="
+            exit 1
+          }
+        env:
+          DATABASE_URL: sqlite:///./test.db
