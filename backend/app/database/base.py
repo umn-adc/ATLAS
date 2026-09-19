@@ -3,7 +3,8 @@ from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.orm import DeclarativeBase
+
+from app.database.models_base import Base
 
 
 class Settings(BaseSettings):
@@ -34,11 +35,6 @@ engine = create_async_engine(
 # async session factory
 # sessions are units of works, they track changes to objects, and commit or rollback as a batch
 async_session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
-
-
-class Base(DeclarativeBase):
-    """Base class for all ORM models. Define your models inheriting from this."""
-
 
 
 async def init_db() -> None:

@@ -6,7 +6,7 @@ from typing import Any
 from sqlalchemy import JSON, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.database import Base
+from app.database.models_base import Base
 
 
 class View(Base):
