@@ -1,11 +1,11 @@
 """Tests for strategy repository - shows what's implemented vs NotImplementedError."""
 
+from datetime import UTC
 from uuid import uuid4
 
 import pytest
 
 from app.modules.strategies.repository import StrategyRepository, StrategyVersionRepository
-
 
 # === StrategyRepository Tests ===
 
@@ -66,9 +66,9 @@ async def test_list_by_owner_excludes_archived(db_session):
     active = await repo.create(owner_id, "Active", None)
     archived = await repo.create(owner_id, "Archived", None)
     # Manually archive one
-    from datetime import datetime, timezone
+    from datetime import datetime
 
-    archived.archived_at = datetime.now(timezone.utc)
+    archived.archived_at = datetime.now(UTC)
     await repo.update(archived)
 
     strategies = await repo.list_by_owner(owner_id, include_archived=False)

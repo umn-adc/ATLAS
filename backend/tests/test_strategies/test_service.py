@@ -5,8 +5,6 @@ from uuid import uuid4
 import pytest
 
 from app.modules.strategies.schemas import StrategyCreate, StrategyUpdate, StrategyVersionCreate
-from app.modules.strategies.service import StrategyService
-
 
 # === Beginner Tasks: get_strategy ===
 
