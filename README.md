@@ -49,8 +49,6 @@ New contributors are welcome!
 
 Keep pull requests focused on a single issue whenever possible.
 
-See the [GitHub Issues](https://github.com/orgs/umn-adc/projects/12/views/1) for current work.
-
 ## Documentation
 
 Project documentation is maintained with MkDocs.
