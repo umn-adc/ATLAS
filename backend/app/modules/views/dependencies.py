@@ -4,20 +4,20 @@ from typing import Annotated
 from uuid import UUID
 
 from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.database import get_db
 from app.modules.views.repository import ViewsRepository
 from app.modules.views.service import ViewsService
 
-# The repository is in-memory for now, so it must be a single shared instance.
-# Creating one per request would lose every view as soon as the request ends.
-_views_repository = ViewsRepository()
-
-# Placeholder until authentication exists. Every view is owned by this user.
+# Placeholder until authentication exists
 _PLACEHOLDER_USER_ID = UUID("00000000-0000-0000-0000-000000000001")
 
 
-def get_views_repository() -> ViewsRepository:
-    return _views_repository
+def get_views_repository(
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> ViewsRepository:
+    return ViewsRepository(db)
 
 
 def get_views_service(

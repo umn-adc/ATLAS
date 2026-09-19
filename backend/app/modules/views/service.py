@@ -20,7 +20,6 @@ class ViewsService:
         view = await self.repository.create(
             owner_id=owner_id,
             name=data.name,
-
             # Turns ViewCreate.ViewLayout Pydantic object into JSON
             # It does this so it can store a JSONB (json blob) on the database
             layout=data.layout.model_dump(mode="json"),
