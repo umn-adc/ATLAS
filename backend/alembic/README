@@ -1,0 +1,33 @@
+DATABASE MIGRATIONS
+
+'Migrations' are like version control for database schema
+We use a tool for Python called alembic which handles our migrations
+A migration is just a change to the database
+
+_ALL CHANGES TO THE DATABASE MUST HAVE A MIGRATION_
+
+If you just pulled changes into your local repo and want to upgrade to
+productions current database (which you should), run:
+
+uv run alembic upgrade head
+
+To create a new table in SQLite:
+
+1. Create model in models.py under its module
+2. Import the model in alembic/env.py (or ensure its imported via Base)
+3. Generate the migration so SQLite knows to build it with:
+
+uv run alembic revision --autogenerate -m "[YOUR CHANGE MESSAGE HERE]"
+
+For example `uv run alembic revision --autogenerate -m "add users table"`
+
+4. Apply the migration with:
+
+uv run alembic upgrade head
+
+OTHER COMMANDS:
+
+uv run alembic upgrade +1 # apply next 1 migration
+uv run alembic downgrade -1 # rollback 1 migration
+uv run alembic current # show current version
+uv run alembic history # list all migrations
