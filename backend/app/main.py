@@ -2,17 +2,16 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from app.database import init_db
 from app.modules.strategies.router import router as strategy_router
 from app.modules.views.router import router as views_router
 
-
-# Use lifespan functions to run code at app startup and shutdown
+# Use lifespan function to run code at app startup and shutdown
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("ATLAS backend starting")
-
+    await init_db()
     yield
-
     print("ATLAS backend stopping")
 
 
