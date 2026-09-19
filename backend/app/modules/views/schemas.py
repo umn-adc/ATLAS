@@ -37,6 +37,5 @@ class ViewResponse(BaseModel):
     name: str
     layout: ViewLayout
 
-    # allows us to read data from attributes from objects like a SQLAlchemy object
-    # This converts a custom object into a Pydantic response it can parse
+    # Allow Pydantic to build this response from a SQLAlchemy object's attributes.
     model_config = {"from_attributes": True}
