@@ -28,9 +28,7 @@ class StrategyService:
         raise NotImplementedError
 
     # beginner
-    def update_strategy(
-        self, strategy_id: UUID, user_id: UUID, data: StrategyUpdate
-    ) -> Strategy:
+    def update_strategy(self, strategy_id: UUID, user_id: UUID, data: StrategyUpdate) -> Strategy:
         """Update a strategy's name or description if the user owns it.
 
         Raises ValueError if strategy not found or user doesn't own it.
