@@ -6,7 +6,7 @@ from uuid import UUID
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database import get_db
+from app.database.base import get_db
 from app.modules.views.repository import ViewsRepository
 from app.modules.views.service import ViewsService
 

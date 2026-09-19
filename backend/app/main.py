@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from app.database import init_db
+from app.database.base import init_db
 from app.modules.strategies.router import router as strategy_router
 from app.modules.views.router import router as views_router
 

@@ -1,3 +1,1 @@
-from app.database.base import Base, async_session, engine, get_db, init_db
-
-__all__ = ["Base", "async_session", "engine", "get_db", "init_db"]
+"""Database package - import from submodules directly to avoid triggering engine creation."""
