@@ -26,3 +26,15 @@ async def create_view(
     owner_id: Annotated[UUID, Depends(get_current_user_id)],
 ):
     return await service.create(data, owner_id)
+
+
+@router.get(
+    "/",
+    response_model=list[ViewResponse],
+    status_code=status.HTTP_200_OK,
+)
+async def get_views(
+    service: Annotated[ViewsService, Depends(get_views_service)],
+    owner_id: Annotated[UUID, Depends(get_current_user_id)],
+):
+    return await service.get_all(owner_id)

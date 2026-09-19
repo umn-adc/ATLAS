@@ -26,3 +26,9 @@ class ViewsService:
         )
 
         return ViewResponse.model_validate(view)
+
+    async def get_all(self, owner_id: UUID) -> list[ViewResponse]:
+        # There will never be too many views, no need for streaming it
+        views = await self.repository.get_all(owner_id=owner_id)
+
+        return [ViewResponse.model_validate(view) for view in views]

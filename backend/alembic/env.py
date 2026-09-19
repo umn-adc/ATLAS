@@ -11,8 +11,8 @@ from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 from app.database.models_base import Base
-from app.modules.views.models import View  # noqa: F401 - import so Alembic sees it
 from app.modules.strategies.models import Strategy, StrategyVersion  # noqa: F401
+from app.modules.views.models import View  # noqa: F401 - import so Alembic sees it
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
