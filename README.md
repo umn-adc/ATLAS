@@ -4,18 +4,9 @@
 
 The platform is designed to run on a local machine or server, with team members accessing the same instance through their browsers.
 
-See [Project Documentation](docs/) for architecture details.
+See [Project Documentation](https://docs.google.com/document/d/1xfD-a51XLQYDKf0SW4yrSjkkpkeMbbOo0Hi6VfGp0M4/edit?usp=sharing) for architecture details.
 
-### Prerequisites
-
-For local container-based development:
-
-- Git
-- Docker Desktop or Docker Engine with Compose
-
-You do not need to install Python or backend dependencies directly when using Docker.
-
-### 1. Clone the repository
+### Getting Started with Development
 
 I recommend doing it in your root
 
@@ -35,8 +26,6 @@ uv run uvicorn app.main:app --reload
 ## Contributing
 
 ATLAS is developed by members of the University of Minnesota App Developers Club.
-
-New contributors are welcome!
 
 ### Development Workflow
 
