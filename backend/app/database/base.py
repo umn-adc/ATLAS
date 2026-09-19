@@ -40,7 +40,6 @@ class Base(DeclarativeBase):
     """Base class for all ORM models. Define your models inheriting from this."""
 
 
-
 async def init_db() -> None:
     """Create all tables defined by models inherting from base. For production, use Alembic migrations instead."""
     async with engine.begin() as conn:

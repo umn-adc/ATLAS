@@ -24,7 +24,7 @@ class ViewsRepository:
             layout=layout,
         )
 
-        self.db.add(view) # Place an object into this object
-        await self.db.commit() # Commit the current transaction in progress
+        self.db.add(view)  # Place an object into this object
+        await self.db.commit()  # Commit the current transaction in progress
         await self.db.refresh(view)
         return view
