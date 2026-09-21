@@ -3,40 +3,52 @@ name = "atlas-backend"
 version = "0.1.0"
 requires-python = ">=3.13,<3.14"
 
-# Only what the onboarding workshop needs. The real ATLAS stack (SQLAlchemy,
-# asyncpg, Alembic, pydantic-settings) gets added back when there is code
-# using it -- a smaller lockfile means a much faster container build.
+# SQLite for self-hosted deployments: single-file database, zero config for users,
+# easy backup (copy atlas.db). SQLAlchemy + aiosqlite for async support.
 dependencies = [
     "fastapi",
     "uvicorn[standard]",
     "pydantic",
+    "pydantic-settings",
+    "sqlalchemy[asyncio]",
+    "aiosqlite",
+    "alembic",
     "httpx",          # used by fastapi.testclient
 ]
 
 [dependency-groups]
 dev = [
     "pytest",
+    "pytest-asyncio",
     "ruff",
+    "pyright",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
 ]
 
 [tool.ruff]
 line-length = 100
 target-version = "py313"
+# Workshop is a teaching module with intentional incomplete code for students
+extend-exclude = ["Workshop", "alembic/versions"]
 
 [tool.ruff.lint]
 # FURB157 wants Decimal(200) rather than Decimal("200") for whole numbers. It
 # is right that both are exact, but the workshop teaches one habit -- money is
 # always built from a string -- and an exception for round numbers is exactly
 # the kind of detail that turns into Decimal(0.1) later.
-ignore = ["FURB157"]
+# DTZ001/DTZ003: Allow naive datetimes in tests and UTC-centric code.
+ignore = ["FURB157", "DTZ001", "DTZ003"]
 
 [tool.ruff.lint.isort]
-# There are no __init__.py files, so tell ruff that Workshop is our own code
-# and not a third-party package.
-known-first-party = ["Workshop"]
+# Tell ruff which modules are our own code and not third-party packages.
+known-first-party = ["Workshop", "packages", "app", "tests"]
 
 [tool.pytest.ini_options]
-testpaths = ["Workshop"]
+# Workshop tests are excluded: they fail until students implement the code
+testpaths = ["tests"]
+asyncio_mode = "auto"
 # Put backend/ on the import path so `from Workshop.main import app` resolves
 # no matter which directory pytest is started from.
 pythonpath = ["."]
@@ -46,3 +58,12 @@ filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::starlette.exceptions.StarletteDeprecationWarning",
 ]
+
+[tool.pyright]
+pythonVersion = "3.13"
+typeCheckingMode = "basic"
+include = ["app", "packages", "tests"]
+# Workshop is excluded: teaching stubs with intentional incomplete code for students
+exclude = ["**/__pycache__", "Workshop"]
+reportMissingImports = true
+reportMissingTypeStubs = false
