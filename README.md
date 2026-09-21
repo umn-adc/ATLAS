@@ -28,6 +28,14 @@ uv sync
 uv run uvicorn app.main:app --reload
 ```
 
+### Frontend - TypeScript & React 
+
+From the frontend directory:
+```bash
+bun install
+bun run dev
+```
+
 ## Contributing
 
 ATLAS is developed by members of the University of Minnesota App Developers Club.
