@@ -6,7 +6,9 @@ def call_payoff(spot: float, strike: float) -> float:
 
     Raises ValueError if spot < 0 or strike <= 0.
     """
-    raise NotImplementedError
+    if spot < 0 or strike <= 0:
+        raise ValueError("Spot price must be >= 0 and strike price must be > 0.")
+    return max(spot - strike, 0)
 
 
 def put_payoff(spot: float, strike: float) -> float:
@@ -14,4 +16,6 @@ def put_payoff(spot: float, strike: float) -> float:
 
     Raises ValueError if spot < 0 or strike <= 0.
     """
-    raise NotImplementedError
+    if spot < 0 or strike <= 0:
+        raise ValueError("Spot price must be >= 0 and strike price must be > 0.")
+    return max(strike - spot, 0)
