@@ -1,5 +1,7 @@
 from uuid import UUID
+from datetime import datetime
 
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.modules.strategies.models import Strategy, StrategyVersion
@@ -42,9 +44,22 @@ class StrategyVersionRepository:
         artifact_path: str,
         parameters: dict,
     ) -> StrategyVersion:
-        """Insert a new strategy version and return it."""
-        raise NotImplementedError
+        version = StrategyVersion(
+            strategy_id=strategy_id,
+            commit_hash=commit_hash,
+            entrypoint=entrypoint,
+            artifact_path=artifact_path,
+            parameters=parameters,
+            created_at=datetime.now(),
+        )
+        self.session.add(version)
+        await self.session.commit()
+        await self.session.refresh(version)
+        return version
 
     async def list_by_strategy(self, strategy_id: UUID) -> list[StrategyVersion]:
-        """Return all versions for a strategy, ordered by created_at desc."""
-        raise NotImplementedError
+        statement = select(StrategyVersion).where(StrategyVersion.strategy_id == strategy_id)
+
+        result = await self.session.execute(statement)
+
+        return list(result.scalars().all())
