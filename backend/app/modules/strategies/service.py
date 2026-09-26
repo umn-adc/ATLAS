@@ -8,13 +8,13 @@ from app.modules.strategies.schemas import (
     StrategyVersionCreate,
 )
 
-from app.modules.views.repository import ViewsRepository
+from app.modules.strategies.repository import StrategyRepository
 
 
 class StrategyService:
     """Manages strategy lifecycle and versioning."""
 
-    def __init__(self, repository):  # potential issue?? should we be using views??
+    def __init__(self, repository: StrategyRepository):
         self.repository = repository
 
     # BEGINNER TASKS - Service methods only (no repository/API)
