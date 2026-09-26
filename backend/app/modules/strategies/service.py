@@ -14,17 +14,19 @@ from app.modules.views.repository import ViewsRepository
 class StrategyService:
     """Manages strategy lifecycle and versioning."""
 
+    def __init__(self, repository): # potential issue?? should we be using views??
+        self.repository = repository
+
     # BEGINNER TASKS - Service methods only (no repository/API)
 
     # beginner
 
     def get_strategy(self, strategy_id: UUID, user_id: UUID) -> Strategy:
         """Return a strategy by ID if the user owns it.
-
         Raises ValueError if strategy not found or user doesn't own it.
         """
 
-        strategy = self.repository.get_by_id(strategy_id) # needs to implement repository??
+        strategy = self.repository.get_by_id(strategy_id) 
 
         if(strategy == None):
             raise ValueError("Strategy not found")

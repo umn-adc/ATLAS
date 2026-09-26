@@ -1,1 +1,0 @@
-"""Workshop solution implementations."""

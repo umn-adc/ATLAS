@@ -1,1 +1,0 @@
-"""ATLAS onboarding workshop module."""
