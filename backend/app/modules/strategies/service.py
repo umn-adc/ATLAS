@@ -34,7 +34,7 @@ class StrategyService:
         if strategy.owner_id != user_id:
             raise ValueError("User doesn't own this strategy")
 
-        raise strategy
+        return strategy
 
     # beginner
     def list_user_strategies(self, user_id: UUID) -> list[Strategy]:
