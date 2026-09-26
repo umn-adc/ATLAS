@@ -8,6 +8,8 @@ from app.modules.strategies.schemas import (
     StrategyVersionCreate,
 )
 
+from app.modules.views.repository import ViewsRepository
+
 
 class StrategyService:
     """Manages strategy lifecycle and versioning."""
@@ -15,11 +17,13 @@ class StrategyService:
     # BEGINNER TASKS - Service methods only (no repository/API)
 
     # beginner
+
     def get_strategy(self, strategy_id: UUID, user_id: UUID) -> Strategy:
         """Return a strategy by ID if the user owns it.
 
         Raises ValueError if strategy not found or user doesn't own it.
         """
+
         strategy = self.repository.get_by_id(strategy_id) # needs to implement repository??
 
         if(strategy == None):
