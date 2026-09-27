@@ -1,0 +1,11 @@
+config
+    + check - checks and returns current configuration settings,
+    returns errors if any
+
+init - Creates a TOML config file for the API
+
+status - Returns current status of ATLAS
+
+start - Starts ATLAS functionality
+
+stop - Stops ATLAS functionality

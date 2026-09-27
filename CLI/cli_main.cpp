@@ -1,5 +1,6 @@
 #include <iostream>
 #include <tomlplusplus/toml.hpp>
+#include "cli_funcs.cpp"
 using namespace toml;
 
 
@@ -8,7 +9,7 @@ void handle_command(char *argv[]) {
         // to do
     }
     else if (argv[0] == "init") {
-        // to do
+        cli_init.init();
     }
     else if (argv[0] == "start") {
         // to do
