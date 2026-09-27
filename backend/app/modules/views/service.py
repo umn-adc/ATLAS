@@ -2,8 +2,9 @@
 
 from uuid import UUID
 
+from app.modules.views.errors import ViewNotFoundError, ViewOwnershipError
 from app.modules.views.repository import ViewsRepository
-from app.modules.views.schemas import ViewCreate, ViewResponse
+from app.modules.views.schemas import ViewCreate, ViewResponse, ViewUpdate
 
 
 class ViewsService:
@@ -32,3 +33,42 @@ class ViewsService:
         views = await self.repository.get_all(owner_id=owner_id)
 
         return [ViewResponse.model_validate(view) for view in views]
+
+    async def get(self, view_id: UUID, owner_id: UUID) -> ViewResponse:
+        view = await self.repository.get_by_id(view_id)
+
+        if view is None:
+            raise ViewNotFoundError(view_id)
+
+        if view.owner_id != str(owner_id):
+            raise ViewOwnershipError(view_id)
+
+        return ViewResponse.model_validate(view)
+
+    async def update(self, view_id: UUID, owner_id: UUID, data: ViewUpdate) -> ViewResponse:
+        view = await self.repository.get_by_id(view_id)
+
+        if view is None:
+            raise ViewNotFoundError(view_id)
+
+        if view.owner_id != str(owner_id):
+            raise ViewOwnershipError(view_id)
+
+        if data.name is not None:
+            view.name = data.name
+        if data.layout is not None:
+            view.layout = data.layout
+
+        view = await self.repository.update(view)
+        return ViewResponse.model_validate(view)
+
+    async def delete(self, view_id: UUID, owner_id: UUID) -> None:
+        view = await self.repository.get_by_id(view_id)
+
+        if view is None:
+            raise ViewNotFoundError(view_id)
+
+        if view.owner_id != str(owner_id):
+            raise ViewOwnershipError(view_id)
+
+        await self.repository.delete(view)

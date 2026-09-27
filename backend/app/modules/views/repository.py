@@ -45,3 +45,17 @@ class ViewsRepository:
         # .all() collects all the extracted objects into a sequence
         # [View(id=1), View(id=2)]
         return list(result.scalars().all())
+
+    async def get_by_id(self, view_id: UUID) -> View | None:
+        statement = select(View).where(View.id == str(view_id))
+        result = await self.session.execute(statement)
+        return result.scalar_one_or_none()
+
+    async def update(self, view: View) -> View:
+        await self.session.commit()
+        await self.session.refresh(view)
+        return view
+
+    async def delete(self, view: View) -> None:
+        await self.session.delete(view)
+        await self.session.commit()
