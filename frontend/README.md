@@ -1,32 +1,42 @@
-# React + TypeScript + Vite
+# ATLAS Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React 19 + TypeScript + Vite, using [TanStack Router](https://tanstack.com/router) for file-based, type-safe routing and [TanStack Query](https://tanstack.com/query) for server state.
 
-Currently, two official plugins are available:
+## Getting started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+bun install
+bun dev        # http://localhost:5173
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Run the FastAPI backend on port 8000 alongside it. In dev, Vite proxies `/api/*` to `http://127.0.0.1:8000`, so call the backend with relative paths like `fetch('/api/strategies')`.
+
+## Scripts
+
+| Command         | What it does                     |
+| --------------- | -------------------------------- |
+| `bun dev`       | Start the dev server             |
+| `bun run build` | Typecheck and build to `dist/`   |
+| `bun run lint`  | Lint with oxlint                 |
+
+Run `bun run lint && bun run build` before opening a PR.
+
+## Routing
+
+Routes are files in `src/routes/`. The file path is the URL:
+
+| File                              | URL               |
+| --------------------------------- | ----------------- |
+| `src/routes/index.tsx`            | `/`               |
+| `src/routes/about.tsx`            | `/about`          |
+| `src/routes/strategies/index.tsx` | `/strategies`     |
+| `src/routes/strategies/$id.tsx`   | `/strategies/:id` |
+
+- `src/routes/__root.tsx` is the layout that wraps every page (header, footer, 404).
+- Each route file must export `const Route = createFileRoute(...)`. The path string is filled in automatically, so don't edit it by hand.
+- Use `<Link to="...">` for navigation. Links are type-checked, so a typo'd route fails the build.
+- Keep filter/view state in the URL with `validateSearch` (see `src/routes/strategies/index.tsx` for the pattern).
+
+### `src/routeTree.gen.ts`
+
+This file is **generated** by the router plugin whenever the dev server or build runs, and it is **committed** so a fresh clone builds without extra steps. Don't edit it by hand, since your changes will be overwritten. If it looks stale, restart `bun dev`.
