@@ -22,5 +22,18 @@ def implied_volatility(
     Returns volatility as a decimal (0.20 = 20%).
     Raises ValueError if price <= 0, spot <= 0, strike <= 0, or T <= 0.
     Raises ImpliedVolatilityError if price is below intrinsic or solver doesn't converge.
+    vega = Newton-Raphson derivative
     """
+    if observed_price <= 0:
+        raise ValueError("")
+    if spot <= 0:
+        raise ValueError("")
+    if strike <= 0:
+        raise ValueError("")
+    if time_to_expiry <=0:
+        raise ValueError("")
+
+    for _ in range(max_iterations):
+
+
     raise NotImplementedError
