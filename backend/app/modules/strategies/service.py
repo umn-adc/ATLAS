@@ -8,19 +8,33 @@ from app.modules.strategies.schemas import (
     StrategyVersionCreate,
 )
 
+from app.modules.strategies.repository import StrategyRepository
+
 
 class StrategyService:
     """Manages strategy lifecycle and versioning."""
 
+    def __init__(self, repository: StrategyRepository):
+        self.repository = repository
+
     # BEGINNER TASKS - Service methods only (no repository/API)
 
     # beginner
+
     def get_strategy(self, strategy_id: UUID, user_id: UUID) -> Strategy:
         """Return a strategy by ID if the user owns it.
-
         Raises ValueError if strategy not found or user doesn't own it.
         """
-        raise NotImplementedError
+
+        strategy = self.repository.get_by_id(strategy_id)
+
+        if strategy == None:
+            raise ValueError("Strategy not found")
+
+        if strategy.owner_id != user_id:
+            raise ValueError("User doesn't own this strategy")
+
+        return strategy
 
     # beginner
     def list_user_strategies(self, user_id: UUID) -> list[Strategy]:
