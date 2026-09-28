@@ -1,5 +1,7 @@
 from uuid import UUID
-
+from app.modules.strategies.repository import(
+    StrategyRepository
+)
 from app.modules.strategies.schemas import (
     Strategy,
     StrategyCreate,
@@ -39,7 +41,8 @@ class StrategyService:
     # beginner
     def list_user_strategies(self, user_id: UUID) -> list[Strategy]:
         """Return all non-archived strategies owned by the user."""
-        raise NotImplementedError
+        return StrategyRepository.list_by_owner(user_id, False)
+        
 
     # beginner
     def update_strategy(self, strategy_id: UUID, user_id: UUID, data: StrategyUpdate) -> Strategy:

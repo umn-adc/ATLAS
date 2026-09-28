@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.modules.strategies.models import Strategy, StrategyVersion
 
 
+
 class StrategyRepository:
     """Database operations for strategies."""
 
@@ -23,6 +24,11 @@ class StrategyRepository:
 
     async def list_by_owner(self, owner_id: UUID, include_archived: bool = False) -> list[Strategy]:
         """Return all strategies for an owner, optionally including archived."""
+        
+        stratigies = await self.repository.get_all(owner_id=owner_id)
+        return [StrategyVersion.model_validate(strategy) for strategy in stratigies]
+
+    
         raise NotImplementedError
 
     async def update(self, strategy: Strategy) -> Strategy:
