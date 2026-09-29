@@ -49,7 +49,6 @@ class UserService:
             return await self.repository.create(data.username, hashed_pw)
         except IntegrityError:
             raise ValueError("Username is already taken")
-    
 
     async def get_user(self, user_id: UUID) -> User:
         """

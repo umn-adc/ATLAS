@@ -28,10 +28,12 @@ async def db_session():
 # === Service Fixtures (for service tests) ===
 # TODO: Replace with real service once repository is implemented
 
+
 @pytest.fixture
 def service():
     """Return a UserService instance."""
     return UserService()
+
 
 @pytest.fixture
 def service_with_data(service):

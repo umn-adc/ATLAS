@@ -22,6 +22,7 @@ async def test_create_user_happy_path(db_session):
     assert result.username is not None
     assert result.password_hash is not None
 
+
 @pytest.mark.asyncio
 async def test_create_user_taken_username(db_session):
     repository = UserRepository(db_session)

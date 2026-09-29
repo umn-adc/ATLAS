@@ -9,9 +9,16 @@ client = TestClient(app)
 
 # === Create ===
 
+
 # TODO: may be blocked by another issue??? cannot get a request through...
 def test_create_user():
-    response = client.post("/api/users/", json={ "username": "testuser","password": "password123",})
+    response = client.post(
+        "/api/users/",
+        json={
+            "username": "testuser",
+            "password": "password123",
+        },
+    )
 
     print("STATUS:", response.status_code)
     print("BODY:", response.text)

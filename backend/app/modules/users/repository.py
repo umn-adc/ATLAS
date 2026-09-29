@@ -40,10 +40,10 @@ class UserRepository:
             Add it to the session, commit, and refresh to get database-generated values.
             Return the user instance.
         """
-        
+
         user = User(
-            username = username,
-            password_hash = password_hash,
+            username=username,
+            password_hash=password_hash,
         )
 
         self.session.add(user)
