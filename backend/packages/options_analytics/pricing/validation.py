@@ -60,7 +60,7 @@ def ValidateOptionGreeks(greeks: OptionGreeks) -> bool:
     return True
 
 # long af function name :sob:
-def ValidateOptionAnalyticsSnapshot(OptionAnalyticsSnapshot: analyticSnapshot) -> bool:
+def ValidateOptionAnalyticsSnapshot(analyticSnapshot: OptionAnalyticsSnapshot) -> bool:
 
     if (analyticSnapshot.market_price < 0):
         raise ValueError("Error: Invalid market price")
