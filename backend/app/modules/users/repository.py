@@ -47,8 +47,8 @@ class UserRepository:
         )
 
         self.session.add(user)
-        self.session.commit()
-        self.session.refresh(user)
+        await self.session.commit()
+        await self.session.refresh(user)
 
         return user
 

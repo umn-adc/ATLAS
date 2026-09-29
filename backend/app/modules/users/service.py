@@ -43,7 +43,7 @@ class UserService:
             Return the created user.
         """
         password = data.password.encode("utf-8")
-        hashed_pw = await bcrypt.hashpw(password, bcrypt.gensalt())
+        hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt())
 
         try:
             return await self.repository.create(data.username, hashed_pw)
