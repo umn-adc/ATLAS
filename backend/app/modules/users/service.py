@@ -38,7 +38,15 @@ class UserService:
             Call repository create method with username and hashed password.
             Return the created user.
         """
-        raise NotImplementedError
+        user = await self.repository.get_by_username(data.username)
+        if( user is not None):
+            raise ValueError("Username is already taken")
+
+        password = data.password.encode("utf-8")
+        hashed_pw = await bcrypt.hashpw(password, bcrypt.gensalt())
+            
+        return await self.repository.create(data.username, hashed_pw)
+    
 
     async def get_user(self, user_id: UUID) -> User:
         """
