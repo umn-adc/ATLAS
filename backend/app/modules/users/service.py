@@ -6,6 +6,8 @@ from app.modules.users.repository import UserRepository
 from app.modules.users.models import User
 from app.modules.users.schemas import UserCreate, UserUpdate, UserPasswordUpdate
 
+import bcrypt
+
 
 class UserService:
     """
