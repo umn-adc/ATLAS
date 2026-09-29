@@ -7,9 +7,7 @@ import pytest_asyncio
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.database.models_base import Base
-
 from app.modules.users.service import UserService
-from app.modules.users.repository import UserRepository
 from app.modules.users.schemas import UserCreate
 
 # === Database Fixtures (for repository tests) ===
