@@ -1,0 +1,222 @@
+/*
+ * ATLAS color theme (Tailwind v4)
+ *
+ * Single source of truth for colors. Typography, spacing and base styles live in index.css.
+ *
+ * Light mode follows the Figma file "ATLAS - Trading Platform" (4WirEXxTjmbTnHccFWKA6v).
+ * Dark mode has no Figma design yet; it is derived from the brand inputs:
+ *   Primary   #400DE7  electric indigo  -> actions, focus, links, primary chart series
+ *   Secondary #DADAFE  lavender mist    -> secondary buttons, badges
+ *   Ink       #0D0106  plum black       -> app background (dark)
+ *
+ * Imported from index.css right after `@import "tailwindcss";`.
+ * Light is the default. Add class="dark" to <html> for dark mode.
+ *
+ * Semantic names follow shadcn/ui conventions (background, card, primary, muted, ...)
+ * so components can be dropped in later. Trading tokens: gain, loss, warning, chart-1..5.
+ *
+ * Gain/loss are red/green, so always pair them with a sign or arrow (+1.2% / ▲)
+ * for color-blind users.
+ */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- Raw palette ---------- */
+@theme {
+  --color-primary-50: #f4f2fe;
+  --color-primary-100: #eae5fe;
+  --color-primary-200: #d5cbfd;
+  --color-primary-300: #b6a3fb;
+  --color-primary-400: #9b82f8;
+  --color-primary-500: #6a3df0;
+  --color-primary-600: #400de7; /* brand */
+  --color-primary-700: #340bbe;
+  --color-primary-800: #2a0a97;
+  --color-primary-900: #210874;
+  --color-primary-950: #140449;
+
+  --color-lavender: #dadafe; /* brand secondary */
+  --color-ink: #0d0106; /* brand ink */
+
+  /* Greys from Figma */
+  --color-gray-25: #fcfdfe;
+  --color-gray-50: #f6f8fc; /* page background */
+  --color-gray-100: #f2f4f7;
+  --color-gray-200: #e4e7ec; /* borders, dividers */
+  --color-gray-300: #d0d5dd; /* button / input borders */
+  --color-gray-400: #98a2b3; /* sidebar section labels */
+  --color-gray-500: #667085; /* secondary text */
+  --color-gray-700: #344054; /* nav text */
+  --color-gray-900: #101828; /* primary text */
+}
+
+/* ---------- Semantic tokens: light (default, from Figma) ---------- */
+:root {
+  --background: #f6f8fc;
+  --foreground: #101828;
+  --card: #ffffff;
+  --card-foreground: #101828;
+  --popover: #ffffff;
+  --popover-foreground: #101828;
+
+  --primary: #400de7;
+  --primary-hover: #340bbe;
+  --primary-foreground: #ffffff;
+  --secondary: #dadafe;
+  --secondary-hover: #c9c9fb;
+  --secondary-foreground: #2a0a97;
+
+  --muted: #f2f4f7;
+  --muted-foreground: #667085;
+  --accent: #f2f4f7; /* hover */
+  --accent-foreground: #344054;
+  --selected: #eef4ff; /* selected table row */
+  --selected-border: #c7d7fe;
+
+  --border: #e4e7ec;
+  --input: #d0d5dd;
+  --ring: #400de7;
+
+  /* Trading semantics. *-foreground is for text, * is for fills/lines */
+  --gain: #027a48;
+  --gain-foreground: #027a48;
+  --gain-muted: #ecfdf3;
+  --loss: #b42318;
+  --loss-foreground: #b42318;
+  --loss-muted: #fef3f2;
+  --loss-border: #fecaca;
+  --warning: #b54708;
+  --warning-foreground: #b54708;
+  --warning-muted: #fffaeb;
+  --warning-border: #fde68a;
+  --destructive: #b42318;
+  --destructive-foreground: #ffffff;
+
+  --tooltip: #101828;
+  --tooltip-foreground: #f2f4f7;
+
+  /* Categorical chart series (strategies, assets). No pure green/red so they
+     never read as gain/loss. */
+  --chart-1: #400de7;
+  --chart-2: #0284c7;
+  --chart-3: #d97706;
+  --chart-4: #c026d3;
+  --chart-5: #64748b;
+  --chart-grid: #e4e7ec;
+}
+
+/* ---------- Semantic tokens: dark ---------- */
+.dark {
+  --background: #0d0106; /* ink */
+  --foreground: #f1eff7;
+  --card: #17121c;
+  --card-foreground: #f1eff7;
+  --popover: #211b28;
+  --popover-foreground: #f1eff7;
+
+  --primary: #6a3df0; /* brand is too dark on ink; lifted one step, 5.9:1 with white */
+  --primary-hover: #7c55f3;
+  --primary-foreground: #ffffff;
+  --secondary: #251c45;
+  --secondary-hover: #2f2458;
+  --secondary-foreground: #dadafe;
+
+  --muted: #211b28;
+  --muted-foreground: #a29db3;
+  --accent: #251c45;
+  --accent-foreground: #dadafe;
+  --selected: #251c45;
+  --selected-border: #3d2f73;
+
+  --border: #2f2838;
+  --input: #3c384c;
+  --ring: #9b82f8;
+
+  --gain: #34d399;
+  --gain-foreground: #34d399;
+  --gain-muted: #0c2a20;
+  --loss: #fb7185;
+  --loss-foreground: #fb7185;
+  --loss-muted: #33111a;
+  --loss-border: #5c1a2a;
+  --warning: #fbbf24;
+  --warning-foreground: #fbbf24;
+  --warning-muted: #2e2108;
+  --warning-border: #5a410c;
+  --destructive: #e0243f;
+  --destructive-foreground: #ffffff;
+
+  --tooltip: #dadafe;
+  --tooltip-foreground: #0d0106;
+
+  --chart-1: #9b82f8;
+  --chart-2: #38bdf8;
+  --chart-3: #fbbf24;
+  --chart-4: #e879f9;
+  --chart-5: #94a3b8;
+  --chart-grid: #2f2838;
+}
+
+/* ---------- Expose semantic tokens as Tailwind utilities ---------- */
+/* e.g. bg-background, text-foreground, bg-primary, hover:bg-primary-hover,
+   text-gain-foreground, bg-loss-muted, border-loss-border, bg-selected, stroke-chart-1 */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-selected: var(--selected);
+  --color-selected-border: var(--selected-border);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gain: var(--gain);
+  --color-gain-foreground: var(--gain-foreground);
+  --color-gain-muted: var(--gain-muted);
+  --color-loss: var(--loss);
+  --color-loss-foreground: var(--loss-foreground);
+  --color-loss-muted: var(--loss-muted);
+  --color-loss-border: var(--loss-border);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-muted: var(--warning-muted);
+  --color-warning-border: var(--warning-border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-tooltip: var(--tooltip);
+  --color-tooltip-foreground: var(--tooltip-foreground);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-chart-grid: var(--chart-grid);
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+  * {
+    border-color: var(--border);
+  }
+}

@@ -9,6 +9,8 @@
 
 The platform is designed to run on a local machine or server, with team members accessing the same instance through their browsers.
 
+![ATLAS Dashboard](ATLAS%20Dashboard.png)
+
 See [Project Documentation](https://docs.google.com/document/d/1xfD-a51XLQYDKf0SW4yrSjkkpkeMbbOo0Hi6VfGp0M4/edit?usp=sharing) for architecture details.
 
 ### Getting Started with Development
