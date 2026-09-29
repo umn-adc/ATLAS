@@ -8,6 +8,8 @@ from app.modules.users.schemas import UserCreate, UserUpdate, UserPasswordUpdate
 
 import bcrypt
 
+from sqlalchemy.exc import IntegrityError
+
 
 class UserService:
     """
@@ -40,14 +42,13 @@ class UserService:
             Call repository create method with username and hashed password.
             Return the created user.
         """
-        user = await self.repository.get_by_username(data.username)
-        if( user is not None):
-            raise ValueError("Username is already taken")
-
         password = data.password.encode("utf-8")
         hashed_pw = await bcrypt.hashpw(password, bcrypt.gensalt())
-            
-        return await self.repository.create(data.username, hashed_pw)
+
+        try:
+            return await self.repository.create(data.username, hashed_pw)
+        except IntegrityError:
+            raise ValueError("Username is already taken")
     
 
     async def get_user(self, user_id: UUID) -> User:

@@ -7,6 +7,8 @@ from sqlalchemy import select
 
 from app.modules.users.models import User
 
+from sqlalchemy.exc import IntegrityError
+
 
 class UserRepository:
     """
@@ -38,9 +40,7 @@ class UserRepository:
             Add it to the session, commit, and refresh to get database-generated values.
             Return the user instance.
         """
-        if self.get_by_username(username) is not None:
-            raise IntegrityError("Username already exists")
-
+        
         user = User(
             username = username,
             password_hash = password_hash,
