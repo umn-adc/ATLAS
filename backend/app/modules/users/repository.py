@@ -3,6 +3,7 @@
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 
 from app.modules.users.models import User
 
@@ -37,7 +38,19 @@ class UserRepository:
             Add it to the session, commit, and refresh to get database-generated values.
             Return the user instance.
         """
-        raise NotImplementedError
+        if self.get_by_username(username) is not None:
+            raise IntegrityError("Username already exists")
+
+        user = User(
+            username = username,
+            password_hash = password_hash,
+        )
+
+        self.session.add(user)
+        self.session.commit()
+        self.session.refresh(user)
+
+        return user
 
     async def get_by_id(self, user_id: UUID) -> User | None:
         """
