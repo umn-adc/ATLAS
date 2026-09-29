@@ -21,3 +21,18 @@ async def test_create_user_happy_path(db_session):
     assert result.id is not None
     assert result.username is not None
     assert result.password_hash is not None
+
+@pytest.mark.asyncio
+async def test_create_user_taken_username(db_session):
+    repository = UserRepository(db_session)
+    service = UserService(repository)
+
+    data = UserCreate(
+        username="testuser",
+        password="password123",
+    )
+
+    result = await service.create_user(data)
+
+    with pytest.raises(ValueError, match="Username is already taken"):
+        await service.create_user(data)
