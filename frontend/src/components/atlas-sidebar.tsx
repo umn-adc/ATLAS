@@ -51,8 +51,8 @@ const AtlasSidebar = () => {
             <SidebarFooter className='bg-white border-t'>
                 {/* This is a button! I just didn't like shadcn's button and I didn't want to mess with it */}
                 <div className='flex items-center gap-2 py-2 px-3 cursor-pointer hover:bg-gray-200 rounded-xl'>
-                    <div className='rounded-full bg-primary-500 p-3 text-sm text-white font-bold'>
-                        DE
+                    <div className='flex size-12  shrink-0 items-center justify-center rounded-full bg-primary-500 text-sm text-white font-bold select-none'>
+                        {username.substring(0, 2).toUpperCase()}
                     </div>
 
                     <div className='flex flex-col'>
