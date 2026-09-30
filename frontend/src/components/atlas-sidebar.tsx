@@ -12,7 +12,7 @@ const AtlasSidebar = () => {
             items: [
                 { label: 'Overview', to: '/overview', Icon: Grid2X2 },
                 { label: 'Strategies', to: '/strategies', Icon: GitGraph },
-                { label: 'Deployments', to: '/about', Icon: GitBranch }
+                { label: 'Deployments', to: '/deployments', Icon: GitBranch }
             ]
         },
         {
