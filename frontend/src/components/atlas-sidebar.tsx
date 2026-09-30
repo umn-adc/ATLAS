@@ -40,7 +40,7 @@ const AtlasSidebar = () => {
                         <SidebarGroupLabel className='uppercase text-gray-500 tracking-widest'>{group.title}</SidebarGroupLabel>
                         <div className='flex flex-col mt-2 text-gray-600'>
                             {group.items.map(item => (
-                                <SidebarGroupContent key={item.to}><Link to={item.to} className='flex flex-row items-center gap-2 px-4 py-3 rounded-xl hover:bg-primary-300/10' activeProps={{ className: 'bg-primary-500/10 text-primary-400 font-bold' }}><item.Icon className='size-6' />{item.label}</Link></SidebarGroupContent>
+                                <SidebarGroupContent key={item.to}><Link to={item.to} className='flex flex-row items-center gap-2 px-4 py-3 rounded-xl hover:bg-primary-300/10 active:bg-primary-300/20' activeProps={{ className: 'bg-primary-500/10 text-primary-400 font-bold' }}><item.Icon className='size-6' />{item.label}</Link></SidebarGroupContent>
                             ))}
                         </div>
                     </SidebarGroup>
