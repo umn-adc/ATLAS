@@ -11,7 +11,6 @@ from uuid import UUID
 
 from .errors import ArtifactExistsError, SourceNotFoundError
 
-
 DATA_PATH = Path("data/strategies")
 
 

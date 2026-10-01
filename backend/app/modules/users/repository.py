@@ -37,7 +37,11 @@ class UserRepository:
             Add it to the session, commit, and refresh to get database-generated values.
             Return the user instance.
         """
-        raise NotImplementedError
+        user = User(username=username, password_hash=password_hash)
+        self.session.add(user)
+        await self.session.commit()
+        await self.session.refresh(user)
+        return user
 
     async def get_by_id(self, user_id: UUID) -> User | None:
         """
@@ -53,7 +57,9 @@ class UserRepository:
             Build a select statement filtering by id.
             Execute and return the scalar result.
         """
-        raise NotImplementedError
+        stmt = select(User).where(User.id == user_id)
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
 
     async def get_by_username(self, username: str) -> User | None:
         """
@@ -69,7 +75,9 @@ class UserRepository:
             Build a select statement filtering by username.
             Execute and return the scalar result.
         """
-        raise NotImplementedError
+        smt = select(User).where(User.username == username)
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
 
     async def list_all(self, include_inactive: bool = False) -> list[User]:
         """
@@ -86,7 +94,11 @@ class UserRepository:
             If include_inactive is False, add a where clause for is_active=True.
             Execute and return all results as a list.
         """
-        raise NotImplementedError
+        stmt = select(User)
+        if not include_inactive:
+            stmt = stmt.where(User.is_active.is_(True))
+        result = await self.session.execute(stmt)
+        return list(result.scalars().all())
 
     async def update(self, user: User) -> User:
         """
@@ -103,7 +115,11 @@ class UserRepository:
             Add the user to session, commit, and refresh.
             Return the updated user.
         """
-        raise NotImplementedError
+        user.updated_at = datetime.now(timezone.utc)
+        self.session.add(user)
+        await self.session.commit()
+        await self.session.refresh()
+        return user
 
     async def delete(self, user: User) -> None:
         """
@@ -118,4 +134,5 @@ class UserRepository:
         Implementation:
             Delete the user from session and commit.
         """
-        raise NotImplementedError
+        await self.session.delete(user)
+        await self.session.commit()
