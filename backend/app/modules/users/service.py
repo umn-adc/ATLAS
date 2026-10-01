@@ -180,4 +180,10 @@ class UserService:
             Set is_active to False on the user model.
             Call repository update and return the result.
         """
-        raise NotImplementedError
+        user = self.repository.get_by_id(user_id)
+
+        if user is None:
+            raise ValueError("user does not exist")
+
+        user.is_active = False
+        return await self.update_user(user)
