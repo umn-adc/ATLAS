@@ -72,3 +72,14 @@ class ViewsService:
             raise ViewOwnershipError(view_id)
 
         await self.repository.delete(view)
+        
+    async def get_user_by_username(self, view_id: UUID, owner_id: UUID, username) -> str:
+        view = await self.repository.get_by_id(view_id)
+        if view is None:
+            raise ViewNotFoundError(view_id)
+        if view.owner_id != str(owner_id):
+            raise ViewOwnershipError(view_id)
+        if self.repository.get_by_username(username):
+            return self.repository.get_by_username(username)
+        else:
+            raise ValueError
