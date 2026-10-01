@@ -3,7 +3,7 @@
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, HTTPException
 
 from app.modules.users.dependencies import get_users_service
 from app.modules.users.schemas import User, UserCreate, UserPasswordUpdate, UserUpdate
