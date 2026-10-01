@@ -1,13 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/') ({
-    component: OverviewPage,
+export const Route = createFileRoute('/data/')({
+  component: DataPage,
 })
 
-function OverviewPage() {
+function DataPage() {
   return (
     <div className="p-6">
-        <h1>Overview</h1>
+        <h1>Data</h1>
         <p className="text-muted-foreground">Coming soon to a page near you.</p>
     </div>
   )
