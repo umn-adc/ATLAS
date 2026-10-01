@@ -6,7 +6,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, status
 
 from app.modules.users.dependencies import get_users_service
-from app.modules.users.schemas import UserCreate, User, UserUpdate, UserPasswordUpdate
+from app.modules.users.schemas import User, UserCreate, UserPasswordUpdate, UserUpdate
 from app.modules.users.service import UserService
 
 router = APIRouter()
@@ -33,7 +33,7 @@ async def create_user(
     try:
         return await service.create_user(data)
     except ValueError as e:
-        raise HTTPException(status_code = status.HTTP_409_CONFLICT, detail =str(e))
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
 
 
 @router.get(
@@ -81,7 +81,7 @@ async def get_user(
     try:
         return await service.get_user(user_id)
     except ValueError as e:
-        raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail =str(e))
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
 
 
 @router.patch(
@@ -115,9 +115,7 @@ async def update_user(
     except ValueError as e:
         detail = str(e)
         status_code = (
-            status.HTTP_409_CONFLICT
-            if "already taken" in detail
-            else status.HTTP_404_NOT_FOUND
+            status.HTTP_409_CONFLICT if "already taken" in detail else status.HTTP_404_NOT_FOUND
         )
         raise HTTPException(status_code=status_code, detail=detail)
 
@@ -206,8 +204,6 @@ async def update_password(
     except ValueError as e:
         detail = str(e)
         status_code = (
-            status.HTTP_400_BAD_REQUEST
-            if "icorrect" in detail
-            else status.HTTP_404_NOT_FOUND
+            status.HTTP_400_BAD_REQUEST if "icorrect" in detail else status.HTTP_404_NOT_FOUND
         )
-        raise HTTPException(status_code=status_code, detail =detail)
+        raise HTTPException(status_code=status_code, detail=detail)

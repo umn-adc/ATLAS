@@ -37,7 +37,7 @@ class UserRepository:
             Add it to the session, commit, and refresh to get database-generated values.
             Return the user instance.
         """
-        user = User(username= username, password_hash=password_hash)
+        user = User(username=username, password_hash=password_hash)
         self.session.add(user)
         await self.session.commit()
         await self.session.refresh(user)
@@ -99,6 +99,7 @@ class UserRepository:
             stmt = stmt.where(User.is_active.is_(True))
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
+
     async def update(self, user: User) -> User:
         """
         Persist changes to an existing user.
