@@ -1,5 +1,6 @@
 from uuid import UUID
 
+from app.modules.strategies.repository import StrategyRepository
 from app.modules.strategies.schemas import (
     Strategy,
     StrategyCreate,
@@ -7,8 +8,6 @@ from app.modules.strategies.schemas import (
     StrategyVersion,
     StrategyVersionCreate,
 )
-
-from app.modules.strategies.repository import StrategyRepository
 
 
 class StrategyService:
@@ -55,7 +54,9 @@ class StrategyService:
 
         Raises ValueError if strategy not found or user doesn't own it.
         """
-        raise NotImplementedError
+        strategy = self.get_strategy(strategy_id, user_id)
+        strategy.archived_at = datetime.now(timezone.utc)
+        return self.repository.update(strategy)
 
     # ADVANCED TASKS - implement repository + service + router
 
