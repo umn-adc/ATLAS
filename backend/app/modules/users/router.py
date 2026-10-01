@@ -3,7 +3,7 @@
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, HTTPException
 
 from app.modules.users.dependencies import get_users_service
 from app.modules.users.schemas import UserCreate, User, UserUpdate, UserPasswordUpdate
@@ -151,7 +151,11 @@ async def deactivate_user(
     Raises:
         404: User not found
     """
-    return await service.deactivate_user(user_id)
+    user = await service.deactivate_user(user_id)
+    if user is None:
+        raise HTTPException( status_code=404, detail="User not found")
+    
+    return user
 
 
 @router.post(
