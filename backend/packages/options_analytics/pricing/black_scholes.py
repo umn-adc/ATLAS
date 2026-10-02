@@ -4,7 +4,6 @@ Conventions: prices in currency, time in years, vol as decimal (0.20 = 20%), rat
 """
 
 import math
-
 from scipy.stats import norm
 
 

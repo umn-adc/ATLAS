@@ -6,7 +6,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, status, HTTPException
 
 from app.modules.users.dependencies import get_users_service
-from app.modules.users.schemas import User, UserCreate, UserPasswordUpdate, UserUpdate
+from app.modules.users.schemas import UserCreate, User, UserUpdate, UserPasswordUpdate
 from app.modules.users.service import UserService
 
 router = APIRouter()
@@ -30,10 +30,7 @@ async def create_user(
     Returns:
         User: Created user data (excludes password_hash)
     """
-    try:
-        return await service.create_user(data)
-    except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
+    return await service.create_user(data)
 
 
 @router.get(
@@ -78,10 +75,7 @@ async def get_user(
     Raises:
         404: User not found
     """
-    try:
-        return await service.get_user(user_id)
-    except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+    return await service.get_user(user_id)
 
 
 @router.patch(
@@ -110,14 +104,7 @@ async def update_user(
         404: User not found
         409: Username already taken
     """
-    try:
-        return await service.update_user(user_id, data)
-    except ValueError as e:
-        detail = str(e)
-        status_code = (
-            status.HTTP_409_CONFLICT if "already taken" in detail else status.HTTP_404_NOT_FOUND
-        )
-        raise HTTPException(status_code=status_code, detail=detail)
+    return await service.update_user(user_id, data)
 
 
 @router.delete(
@@ -140,10 +127,7 @@ async def delete_user(
     Raises:
         404: User not found
     """
-    try:
-        await service.delete_user(user_id)
-    except ValueError as e:
-        raise HTTTPException(status_code=status.HTTP_404_NOT_FOUND, detial=str(e))
+    await service.delete_user(user_id)
 
 
 @router.post(
@@ -167,10 +151,7 @@ async def deactivate_user(
     Raises:
         404: User not found
     """
-    try:
-        return await service.deactivate_user(user_id)
-    except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+    return await service.deactivate_user(user_id)
 
 
 @router.post(
@@ -199,11 +180,4 @@ async def update_password(
         404: User not found
         400: Current password incorrect
     """
-    try:
-        return await service.update_password(user_id, data)
-    except ValueError as e:
-        detail = str(e)
-        status_code = (
-            status.HTTP_400_BAD_REQUEST if "icorrect" in detail else status.HTTP_404_NOT_FOUND
-        )
-        raise HTTPException(status_code=status_code, detail=detail)
+    return await service.update_password(user_id, data)
