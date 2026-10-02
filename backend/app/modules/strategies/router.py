@@ -5,18 +5,11 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, status
 
-from app.modules.strategies.dependencies import get_current_user_id, get_strategies_service
-from app.modules.strategies.schemas import (
-    Strategy,
-    StrategyCreate,
-    StrategyUpdate,
-    StrategyVersion,
-    StrategyVersionCreate,
-)
+from app.modules.strategies.dependencies import get_strategies_service, get_current_user_id
+from app.modules.strategies.schemas import StrategyCreate, Strategy, StrategyUpdate, StrategyVersionCreate, StrategyVersion
 from app.modules.strategies.service import StrategyService
 
 router = APIRouter()
-
 
 @router.post(
     "/strategies",
@@ -30,7 +23,6 @@ async def create_strategy(
 ):
     return await service.create_strategy(user_id, data)
 
-
 @router.get(
     "/strategies",
     response_model=list[Strategy],
@@ -41,7 +33,6 @@ async def list_user_strategies(
     service: Annotated[StrategyService, Depends(get_strategies_service)],
 ):
     return service.list_user_strategies(user_id)
-
 
 @router.get(
     "/strategies{id}",
@@ -54,7 +45,6 @@ async def get_strategy(
     service: Annotated[StrategyService, Depends(get_strategies_service)],
 ):
     return await service.get_strategy(strategy_id, user_id)
-
 
 @router.patch(
     "/strategies{id}",
@@ -69,7 +59,6 @@ async def update_strategy(
 ):
     return await service.update_strategy(strategy_id, user_id, data)
 
-
 @router.delete(
     "/strategies{id}",
     response_model=Strategy,
@@ -81,7 +70,6 @@ async def archive_strategy(
     service: Annotated[StrategyService, Depends(get_strategies_service)],
 ):
     return await service.archive_strategy(strategy_id, user_id)
-
 
 @router.post(
     "/strategies/{id}/versions",
@@ -96,7 +84,6 @@ async def create_version(
 ):
     return await service.create_version(strategy_id, user_id, data)
 
-
 @router.get(
     "/strategies/{id}/versions",
     response_model=StrategyVersion,
@@ -108,3 +95,8 @@ async def list_versions(
     service: Annotated[StrategyService, Depends(get_strategies_service)],
 ):
     return await service.list_versions(strategy_id, user_id)
+
+
+
+
+

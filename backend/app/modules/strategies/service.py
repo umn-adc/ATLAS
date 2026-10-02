@@ -1,6 +1,5 @@
 from uuid import UUID
 
-from app.modules.strategies.repository import StrategyRepository
 from app.modules.strategies.schemas import (
     Strategy,
     StrategyCreate,
@@ -8,6 +7,8 @@ from app.modules.strategies.schemas import (
     StrategyVersion,
     StrategyVersionCreate,
 )
+
+from app.modules.strategies.repository import StrategyRepository
 
 
 class StrategyService:
