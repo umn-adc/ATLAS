@@ -1,6 +1,9 @@
 """Implied volatility solver."""
+import math 
 
 from packages.options_analytics.schemas import OptionType
+from greeks import vega
+from black_scholes import black_scholes_call, black_scholes_put
 
 
 class ImpliedVolatilityError(Exception):
@@ -33,7 +36,32 @@ def implied_volatility(
     if time_to_expiry <=0:
         raise ValueError("")
 
+    is_call = option_type == OptionType.CALL
+
+    discounted_strike = strike * math.exp(-risk_free_rate * time_to_expiry)
+    if is_call:
+        intrinsic = max(spot - discounted_strike, 0.0)
+    else:
+        intrinsic = max(discounted_strike - spot, 0.0)
+    if observed_price < intrinsic:
+        raise ImpliedVolatilityError("Price is below intrinsic value (arbitrage)")
+
+    price_function = black_scholes_call if is_call else black_scholes_put
+
+    volatility = 0.2
+
     for _ in range(max_iterations):
+        price = price_function(spot, strike, time_to_expiry, risk_free_rate, volatility)
+        diff = price - observed_price
+        if abs(diff) <= tolerance:
+            return volatility
 
+        v = vega(spot, strike, time_to_expiry, risk_free_rate, volatility) * 100
+        if v <= 1e-10:
+            raise ImpliedVolatilityError("Vega too small; colver cannot converge")
 
-    raise NotImplementedError
+        volatility -= diff / v
+        if volatility <= 0:
+            raise ImpliedVolatilityError("Solver stepped to non-positive volatility")
+    
+    raise ImpliedVolatilityError("IV did not converge")
