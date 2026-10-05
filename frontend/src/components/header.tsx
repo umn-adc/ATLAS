@@ -1,8 +1,9 @@
+import { SidebarTrigger } from '@/components/ui/sidebar';
 
 export default function Header() {
     return (
-        <div className='w-full bg-gray-800 h-12'>
-            <Link to="/about">About</Link>
+        <div className='w-full bg-gray-500 h-12'>
+            <SidebarTrigger className="absolute m-4" />
         </div>
     );
 }

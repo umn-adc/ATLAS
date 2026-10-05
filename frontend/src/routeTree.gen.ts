@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BacktestingIndexRouteImport } from './routes/backtesting/index'
 import { Route as DataIndexRouteImport } from './routes/data/index'
 import { Route as DeploymentsIndexRouteImport } from './routes/deployments/index'
+import { Route as LogsIndexRouteImport } from './routes/logs/index'
 import { Route as MonitoringIndexRouteImport } from './routes/monitoring/index'
 import { Route as RiskIndexRouteImport } from './routes/risk/index'
 import { Route as SettingsIndexRouteImport } from './routes/settings/index'
@@ -36,6 +37,11 @@ const DataIndexRoute = DataIndexRouteImport.update({
 const DeploymentsIndexRoute = DeploymentsIndexRouteImport.update({
   id: '/deployments/',
   path: '/deployments/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LogsIndexRoute = LogsIndexRouteImport.update({
+  id: '/logs/',
+  path: '/logs/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MonitoringIndexRoute = MonitoringIndexRouteImport.update({
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/backtesting/': typeof BacktestingIndexRoute
   '/data/': typeof DataIndexRoute
   '/deployments/': typeof DeploymentsIndexRoute
+  '/logs/': typeof LogsIndexRoute
   '/monitoring/': typeof MonitoringIndexRoute
   '/risk/': typeof RiskIndexRoute
   '/settings/': typeof SettingsIndexRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/backtesting': typeof BacktestingIndexRoute
   '/data': typeof DataIndexRoute
   '/deployments': typeof DeploymentsIndexRoute
+  '/logs': typeof LogsIndexRoute
   '/monitoring': typeof MonitoringIndexRoute
   '/risk': typeof RiskIndexRoute
   '/settings': typeof SettingsIndexRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/backtesting/': typeof BacktestingIndexRoute
   '/data/': typeof DataIndexRoute
   '/deployments/': typeof DeploymentsIndexRoute
+  '/logs/': typeof LogsIndexRoute
   '/monitoring/': typeof MonitoringIndexRoute
   '/risk/': typeof RiskIndexRoute
   '/settings/': typeof SettingsIndexRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/backtesting/'
     | '/data/'
     | '/deployments/'
+    | '/logs/'
     | '/monitoring/'
     | '/risk/'
     | '/settings/'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/backtesting'
     | '/data'
     | '/deployments'
+    | '/logs'
     | '/monitoring'
     | '/risk'
     | '/settings'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/backtesting/'
     | '/data/'
     | '/deployments/'
+    | '/logs/'
     | '/monitoring/'
     | '/risk/'
     | '/settings/'
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   BacktestingIndexRoute: typeof BacktestingIndexRoute
   DataIndexRoute: typeof DataIndexRoute
   DeploymentsIndexRoute: typeof DeploymentsIndexRoute
+  LogsIndexRoute: typeof LogsIndexRoute
   MonitoringIndexRoute: typeof MonitoringIndexRoute
   RiskIndexRoute: typeof RiskIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/deployments'
       fullPath: '/deployments/'
       preLoaderRoute: typeof DeploymentsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/logs/': {
+      id: '/logs/'
+      path: '/logs'
+      fullPath: '/logs/'
+      preLoaderRoute: typeof LogsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/monitoring/': {
@@ -200,6 +220,7 @@ const rootRouteChildren: RootRouteChildren = {
   BacktestingIndexRoute: BacktestingIndexRoute,
   DataIndexRoute: DataIndexRoute,
   DeploymentsIndexRoute: DeploymentsIndexRoute,
+  LogsIndexRoute: LogsIndexRoute,
   MonitoringIndexRoute: MonitoringIndexRoute,
   RiskIndexRoute: RiskIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
