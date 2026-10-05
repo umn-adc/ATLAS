@@ -3,7 +3,7 @@ import Footer from './footer';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
     return (
-        <div className="flex flex-column">
+        <div className="flex flex-col">
             <Header />
                 {children}
             <Footer />
