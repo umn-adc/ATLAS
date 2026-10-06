@@ -10,4 +10,5 @@ __pycache__/
 .vscode
 /CLI/build
 CLI/build.bat
+CLI/build.sh
 /CLI/CLI11
