@@ -5,6 +5,7 @@ type MetricProps = {
   badge?: string;
   suffix?: string;
 };
+
 export function Metric({
   label,
   value,
@@ -15,16 +16,19 @@ export function Metric({
     return (
     <div>
       <div className="label">{label}</div>
+
       <div
-        className={`flex items-center gap-2 text-lg font-bold ${
-            tone === "gain"
-                ? "text-gain-foreground"
-                : tone === "loss"
-                    ? "text-loss-foreground"
-                    : ""
-  }`}
->
+        className={`flex items-center gap-2 text-lg font-bold
+          ${tone === "gain" ?
+            "text-gain-foreground" :
+            tone === "loss" ?
+            "text-loss-foreground" :
+            ""
+          }
+        `}
+      >
         {value}
+
         {badge && (
           <span className="rounded-sm bg-gain-muted px-1.5 py-0.5 text-xs font-semibold text-gain-foreground">
             {badge}

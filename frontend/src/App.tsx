@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <section id="center">
-        
+
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
           <img src={reactLogo} className="framework" alt="React logo" />
@@ -32,7 +32,7 @@ function App() {
         </button>
       </section>
 
-      <div className="ticks"></div>
+      <div className="ticks" />
 
       <section id="next-steps">
         <div id="docs">

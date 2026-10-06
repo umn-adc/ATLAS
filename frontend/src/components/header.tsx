@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Metric } from "./ui/metric";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+
 const MOCK_ACCOUNT = {
   nav: "$2,847,392",
   dailyPnl: "+$14,729",
@@ -9,6 +11,7 @@ const MOCK_ACCOUNT = {
   activeStrategies: "7",
   totalStrategies: "9",
 };
+
 function Clock() {
   const [now, setNow] = useState(() => new Date());
 
@@ -28,48 +31,53 @@ function Clock() {
     </span>
   );
 }
+
 export default function Header() {
   return (
-    
-   <header className="flex items-center justify-between border-b bg-card px-6 py-3">
-  <div className="flex items-center gap-6">
-    <Metric
-      label="NAV"
-      value={MOCK_ACCOUNT.nav}
-    />
+    <header className="flex items-center justify-between border-b bg-card px-6 py-3">
+      <div className="w-full flex items-center justify-start sm:gap-4 md:gap-8 lg:gap-16 xl:gap-24">
+        <div className="rounded-[50%] bg-muted cursor-pointer">
+          <SidebarTrigger className="p-4" />
+        </div>
 
-    <Metric
-      label="Daily P&L"
-      value={MOCK_ACCOUNT.dailyPnl}
-      tone="gain"
-      badge={MOCK_ACCOUNT.dailyPnlBadge}
-    />
+        <Metric
+          label="NAV"
+          value={MOCK_ACCOUNT.nav}
+        />
 
-    <Metric
-      label="Gross Exposure"
-      value={MOCK_ACCOUNT.grossExposure}
-    />
+        <Metric
+          label="Daily P&L"
+          value={MOCK_ACCOUNT.dailyPnl}
+          tone="gain"
+          badge={MOCK_ACCOUNT.dailyPnlBadge}
+        />
 
-    <Metric
-      label="Net Exposure"
-      value={MOCK_ACCOUNT.netExposure}
-      tone="gain"
-    />
+        <Metric
+          label="Gross Exposure"
+          value={MOCK_ACCOUNT.grossExposure}
+        />
 
-    <Metric
-      label="Active Strategies"
-      value={MOCK_ACCOUNT.activeStrategies}
-      suffix={`of ${MOCK_ACCOUNT.totalStrategies}`}
-    />
-  </div>
+        <Metric
+          label="Net Exposure"
+          value={MOCK_ACCOUNT.netExposure}
+          tone="gain"
+        />
 
-  <div className="flex items-center gap-4">
-  <div className="flex items-center gap-2">
-    <span className="size-2 rounded-full bg-gain animate-pulse" />
-    <span className="label">LIVE</span>
-  </div>
+        <Metric
+          label="Active Strategies"
+          value={MOCK_ACCOUNT.activeStrategies}
+          suffix={`of ${MOCK_ACCOUNT.totalStrategies}`}
+        />
+      </div>
 
-  <Clock />
-</div>
-</header>
-)}
+      <div className="w-full flex items-center justify-end gap-4">
+        <div className="h-full flex items-center gap-2">
+          <span className="size-2 rounded-full bg-gain animate-pulse" />
+          <span className="label">LIVE</span>
+        </div>
+
+        <Clock />
+      </div>
+    </header>
+  )
+}

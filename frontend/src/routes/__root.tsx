@@ -10,11 +10,11 @@ export const Route = createRootRoute({
 
 function RootLayout() {
     return (
-        <>
+        <div className="w-full">
 			<AppShell>
 				<Outlet/> {/*This is the hole child that routes render into*/}
 			</AppShell>
 			{import.meta.env.DEV && <TanStackRouterDevtools position="bottom-right"/>}
-        </>
+        </div>
     )
 }
