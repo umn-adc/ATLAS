@@ -8,7 +8,8 @@ int main(int argc, char *argv[]) {
     CLI_setup(atlas);
 
     CLI11_PARSE(atlas, argc, argv);
-    
+
+    // checks any command line inputs for commands
     if (atlas.got_subcommand("init")) {
         std::cout << "init ran\n";
         initialize();

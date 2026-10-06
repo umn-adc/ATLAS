@@ -9,11 +9,13 @@ using namespace toml;
 struct atlas_config;
 table tbl;
 
+// creates all subcommands and flags via CLI11 tools
 void CLI_setup(CLI::App& atlas) {
     CLI::App* init = atlas.add_subcommand("init", "Creates a default config file.");
     CLI::App* config = atlas.add_subcommand("config", "Root for config changes.");
 }
 
+// creates/overwrites config file from default_config.toml
 int initialize() {
     std::ifstream default_config("configs/default_config.toml");
     std::ofstream config("configs/config.toml");
@@ -29,6 +31,7 @@ int initialize() {
     return 0;
 }
 
+// parses and validates config file, returns when error was encountered if any
 int configure() {
     try {
         tbl = parse_file("config.toml");
