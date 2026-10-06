@@ -23,7 +23,7 @@ int initialize() {
     while (default_config) {
         std::string line;
         std::getline(default_config, line);
-        // config << line << "\n";
+        config << line << "\n";
     }
         
     default_config.close();
@@ -34,11 +34,11 @@ int initialize() {
 // parses and validates config file, returns when error was encountered if any
 int configure() {
     try {
-        tbl = parse_file("config.toml");
-        std::cout << "Config file parsed successfully!" << std::endl;
+        tbl = parse_file("configs/config.toml");
+        std::cout << "Config file parsed successfully!\n" << std::endl;
     }
     catch (const toml::parse_error& err){
-        std::cout << "Failed to parse config file." << std::endl;
+        std::cout << "Failed to parse config file.\n" << std::endl;
     }
 
     try {
@@ -54,10 +54,10 @@ int configure() {
             std::string_view level = tbl["level"].value_or(""sv);
             std::string_view default_working_dir = tbl["default_working_dir"].value_or(""sv);
         };
-        std::cout << "Config file validated successfully!";
+        std::cout << "Config file validated successfully!\n";
     }
     catch (const error_t& validate_err){
-        std::cout << "Failed to validate config file.";
+        std::cout << "Failed to validate config file.\n";
     }
 
     return 0;
