@@ -9,24 +9,24 @@ from uuid import UUID, uuid4
 
 from app.database.base import Base
 
-class NotifcationType(StrEnum):
+class NotificationType(StrEnum):
     deployment_complete =  "deployment_complete"
     strategy_shared = "strategy_shared"
     #TODO add more Types
 
-class Notification(Base):
+class NotificationModel(Base):
     __tablename__ = "notifications"
 
     id: Mapped[UUID] = mapped_column(
         primary_key=True,
         default=uuid4,
     )
-    user_id: Mapped[UUID] = mapped_column(
+    owner_id: Mapped[UUID] = mapped_column(
         ForeignKey("users.id"),
         nullable=False,
     )
 
-    type: Mapped[NotifcationType] = mapped_column(
+    type: Mapped[NotificationType] = mapped_column(
         String(50),
         nullable=False,
     )            # deployment_complete, strategy_shared, etc.
