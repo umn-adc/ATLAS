@@ -23,5 +23,4 @@ include_directories(
 target_link_libraries(atlas
     PRIVATE
         CLI11::CLI11
-        tomlplusplus::tomlplusplus
             )
