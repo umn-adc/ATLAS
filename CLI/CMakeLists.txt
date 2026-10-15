@@ -9,6 +9,11 @@ add_executable(atlas
     src/CLI_funcs.cpp
 )
 
+set_target_properties(atlas PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+)
+
 add_subdirectory(tomlplusplus)
 add_subdirectory(cli11)
 
