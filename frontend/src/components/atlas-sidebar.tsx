@@ -1,6 +1,7 @@
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel } from '@/components/ui/sidebar'
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader } from '@/components/ui/sidebar'
 import { Link } from '@tanstack/react-router'
 import { ChartArea, ChevronsUpDown, Database, GitBranch, GitGraph, Grid2X2, List, Settings, Shield } from 'lucide-react'
+import AtlasLogo from '../assets/atlas-logo.svg';
 
 const AtlasSidebar = () => {
     const username = 'Atlas';
@@ -34,7 +35,14 @@ const AtlasSidebar = () => {
 
     return (
         <Sidebar>
-            <SidebarContent className='bg-white mt-4'>
+            <SidebarHeader className='bg-white'>
+                <Link to={'/'} className='flex flex-row items-center gap-4'>
+                    <img src={AtlasLogo} alt="My Logo" width="48" height="48" />
+                    <p className='font-brand text-brand text-primary-500'>ATLAS</p>
+                </Link>
+            </SidebarHeader >
+
+            <SidebarContent className='bg-white'>
                 {nav.map((group, index) => (
                     <SidebarGroup key={index}>
                         <SidebarGroupLabel className='uppercase text-gray-500 tracking-widest'>{group.title}</SidebarGroupLabel>
