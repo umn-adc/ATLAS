@@ -10,7 +10,7 @@ const AtlasSidebar = () => {
         {
             title: 'Monitor',
             items: [
-                { label: 'Overview', to: '/overview', Icon: Grid2X2 },
+                { label: 'Overview', to: '/', Icon: Grid2X2 },
                 { label: 'Strategies', to: '/strategies', Icon: GitGraph },
                 { label: 'Deployments', to: '/deployments', Icon: GitBranch }
             ]
