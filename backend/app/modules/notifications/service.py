@@ -20,17 +20,23 @@ class NotificationService():
                 # title:str, 
                 # message:str, 
                 # data:dict
+    
+
+    #
+    def get_notification(self, page: int, limit: int, unread_filter = False):
+        return self.repository.get_notification(self, page, limit, unread_filter)
+
 
     def get_notification_count(self):
-        raise NotImplementedError
+        raise NotImplementedError ## return paginated results???
 
     def read_all_notifications(self):
-        raise NotImplementedError
+        raise NotImplementedError 
 
     def read_notification_by_id(self, owner_id: UUID, notification_id: UUID):
         #get notificaiton
         #check ownership
         # if correct: user datetime.func.now()
-        
+
         raise NotImplementedError
 
