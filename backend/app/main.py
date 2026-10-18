@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from app.database.base import init_db
 from app.modules.strategies.router import router as strategy_router
 from app.modules.views.router import router as views_router
+from app.modules.users.router import router as user_router
 
 
 # Use lifespan function to run code at app startup and shutdown
@@ -34,6 +35,12 @@ def create_app() -> FastAPI:
         views_router,
         prefix="/api/views",
         tags=["Views"],
+    )
+
+    app.include_router(
+        user_router,
+        prefix="/api/users",
+        tags=["Users"],
     )
 
     @app.get("/health", tags=["Health"])

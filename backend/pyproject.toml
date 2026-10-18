@@ -14,6 +14,7 @@ dependencies = [
     "aiosqlite",
     "alembic",
     "httpx",          # used by fastapi.testclient
+    "bcrypt>=5.0.0",
 ]
 
 [dependency-groups]
