@@ -118,4 +118,5 @@ class UserRepository:
         Implementation:
             Delete the user from session and commit.
         """
-        raise NotImplementedError
+        await self.session.delete(user)
+        await self.session.commit()
