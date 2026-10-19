@@ -1,8 +1,5 @@
 """Tests for Greeks."""
 
-# COMMENTED OUT - Not focus of current sprint
-# Uncomment when options_analytics work resumes
-
 import pytest
 
 from packages.options_analytics.pricing.greeks import delta, gamma, theta, vega
@@ -18,7 +15,7 @@ def test_call_delta_range():
 
 def test_put_delta_range():
     d = delta(S, K, T, r, vol, OptionType.PUT)
-    assert -0.5 > d > -0.7
+    assert -0.3 > d > -0.4
 
 
 def test_gamma_positive():
