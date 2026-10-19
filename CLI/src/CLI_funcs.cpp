@@ -9,8 +9,6 @@ using namespace toml;
 struct atlas_config;
 table tbl;
 
-
-
 namespace subcommands {
     // creates all subcommands and flags via CLI11 tools
     void CLI_setup(CLI::App& atlas) {
