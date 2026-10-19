@@ -41,7 +41,7 @@ class StrategyService:
     # beginner
     def list_user_strategies(self, user_id: UUID) -> list[Strategy]:
         """Return all non-archived strategies owned by the user."""
-        return StrategyRepository.list_by_owner(user_id, False)
+        return StrategyRepository.list_by_owner(user_id)
         
 
     # beginner

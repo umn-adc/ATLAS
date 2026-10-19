@@ -24,12 +24,27 @@ class StrategyRepository:
 
     async def list_by_owner(self, owner_id: UUID, include_archived: bool = False) -> list[Strategy]:
         """Return all strategies for an owner, optionally including archived."""
+
+        # to include by archived or not, query the database differently
+        # strategies = []
+        # if include_archived:
+        #     strategies = await self.session.list_by_owner()
+        # else:
+        #     strategies = await .... (query db for strategies that arent archived eg archived = NULL ) 
+        # do same model validate list comprehension
         
-        stratigies = await self.repository.get_all(owner_id=owner_id)
-        return [StrategyVersion.model_validate(strategy) for strategy in stratigies]
+        #stratigies = await self.session.list_by_owner(owner_id=owner_id)
+        stratigies = []
+        if include_archived:
+            strategies = await self.session.list_by_owner()
+            return [Strategy.model_validate(strategy) for strategy in stratigies]
+        else:
+            strategies = await self.session.list_by_owner()
+            
+
 
     
-        raise NotImplementedError
+        
 
     async def update(self, strategy: Strategy) -> Strategy:
         """Persist changes to an existing strategy."""
