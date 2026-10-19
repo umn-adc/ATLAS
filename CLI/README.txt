@@ -3,7 +3,7 @@ Using the atlas command after building will allow command line arguments to perf
 or test some actions and features.
 
 Dependencies:
-Cmake: https://cmake.org/download/
+Cmake 4.0: https://cmake.org/download/
 toml++: run 'git submodule add https://github.com/marzer/tomlplusplus.git'
 CLI11:  run 'git submodule add https://github.com/cliutils/cli11'
 
