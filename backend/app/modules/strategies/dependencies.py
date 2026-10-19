@@ -20,4 +20,5 @@ def get_strategies_service(
 
 def get_current_user_id() -> UUID:
     # TODO: replace with the real user from the auth token
+    _PLACEHOLDER_USER_ID = UUID("00000000-0000-0000-0000-000000000001")
     return _PLACEHOLDER_USER_ID
