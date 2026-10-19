@@ -1,3 +1,5 @@
+import math
+from schemas import *
 # To validate that class atributes from schemas.py are valid inputs
 
 def ValidateOptionContract(contract: OptionContract) -> bool:
