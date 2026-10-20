@@ -94,7 +94,7 @@ class UserService:
             Call repository list_all with the include_inactive flag.
             Return the result directly.
         """
-        raise NotImplementedError
+        return self.repository.list_all(include_inactive)
 
     async def update_user(self, user_id: UUID, data: UserUpdate) -> User:
         """
