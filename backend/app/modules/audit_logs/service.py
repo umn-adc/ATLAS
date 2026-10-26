@@ -17,9 +17,10 @@ class AuditService:
             self.repository = repository
 
 
-    def log_action(self, user_id: UUID, action: str, actor: Actor, created_at: datetime) -> AuditEventCreate:
-        """Logs performed action, and type"""
+    def log_action(self, user_id: UUID, action: str, actor: Actor, created_at: datetime, details: dict) -> AuditEvent:
+        """Records a new audit event"""
 
+        #returns created logs from repository...
         raise NotImplementedError
 
     def get_logs(self, user_id: UUID, before_datetime: datetime) -> list[AuditEvent]:
