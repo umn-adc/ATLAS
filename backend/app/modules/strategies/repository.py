@@ -88,12 +88,12 @@ class StrategyVersionRepository:
         return list(result.scalars().all())
 
         
-            created_at=datetime.now(),
-        )
-        self.session.add(version)
-        await self.session.commit()
-        await self.session.refresh(version)
-        return version
+        #     created_at=datetime.now(),
+        # )
+        # self.session.add(version)
+        # await self.session.commit()
+        # await self.session.refresh(version)
+        # return version
 
     async def list_by_strategy(self, strategy_id: UUID) -> list[StrategyVersion]:
         statement = select(StrategyVersion).where(StrategyVersion.strategy_id == strategy_id)
