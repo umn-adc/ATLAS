@@ -87,14 +87,6 @@ class StrategyVersionRepository:
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
 
-        # TODO: No idea what the next few lines were started for. Uncomment and finish if yours. Causes errors in test cases
-        # created_at=datetime.now(),
-        # )
-        # self.session.add(version)
-        # await self.session.commit()
-        # await self.session.refresh(version)
-        # return version
-
     async def list_by_strategy(self, strategy_id: UUID) -> list[StrategyVersion]:
         statement = select(StrategyVersion).where(StrategyVersion.strategy_id == strategy_id)
 
