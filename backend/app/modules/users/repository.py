@@ -86,7 +86,11 @@ class UserRepository:
             If include_inactive is False, add a where clause for is_active=True.
             Execute and return all results as a list.
         """
-        raise NotImplementedError
+        filter = select(User)
+        if (include_inactive == False):
+            filter = filter.where(User.is_active == True)
+        users = self.session.scalars(filter).all()
+        return users
 
     async def update(self, user: User) -> User:
         """
@@ -118,4 +122,5 @@ class UserRepository:
         Implementation:
             Delete the user from session and commit.
         """
-        raise NotImplementedError
+        await self.session.delete(user)
+        await self.session.commit()

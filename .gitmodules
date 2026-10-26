@@ -1,0 +1,6 @@
+[submodule "CLI/tomlplusplus"]
+	path = CLI/tomlplusplus
+	url = https://github.com/marzer/tomlplusplus.git
+[submodule "CLI/cli11"]
+	path = CLI/cli11
+	url = https://github.com/cliutils/cli11
