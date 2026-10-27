@@ -36,7 +36,7 @@ class StrategyRepository:
         stmt = select(Strategy).where(
             Strategy.owner_id == owner_id
         ) # get all strategies by owner id
-        
+
         if not include_archived: # check if archived strategies should be excluded
             stmt = stmt.where(Strategy.archived_at.is_(None))
 

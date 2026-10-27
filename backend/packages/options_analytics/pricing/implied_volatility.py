@@ -1,6 +1,6 @@
 """Implied volatility solver."""
 
-import math 
+import math
 
 from packages.options_analytics.schemas import OptionType
 from packages.options_analytics.pricing.greeks import vega
