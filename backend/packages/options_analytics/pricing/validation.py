@@ -13,6 +13,7 @@ def ValidateOptionContract(contract: OptionContract) -> bool:
 
     return True
 
+
 def ValidateOptionQuote(quote: OptionQuote) -> bool:
 
     if quote.bid < 0:
@@ -21,9 +22,9 @@ def ValidateOptionQuote(quote: OptionQuote) -> bool:
     if quote.ask < 0:
         raise ValueError("Error: Invalid ask")
 
-    if ((not math.isfinite(quote.bid)) or (not math.isfinite(quote.ask))):
+    if (not math.isfinite(quote.bid)) or (not math.isfinite(quote.ask)):
         raise ValueError("Error: non-finite input")
-    
+
     return True
 
 
@@ -48,6 +49,7 @@ def ValidateOptionPricing(priceInput: PricingInputs) -> bool:
         raise ValueError("Error: non-finite input")
 
     return True
+
 
 def ValidateOptionGreeks(greeks: OptionGreeks) -> bool:
 

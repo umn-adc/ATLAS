@@ -7,6 +7,7 @@ import math
 from scipy.stats import norm
 # Fix here: scipy not installed on git system
 
+
 def black_scholes_call(
     spot: float,
     strike: float,

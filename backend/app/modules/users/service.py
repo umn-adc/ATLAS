@@ -161,7 +161,7 @@ class UserService:
             Call repository delete method.
         """
         user = repository.get_by_id(user_id)
-        if (user != None):
+        if user != None:
             await self.repository.delete_user(user)
         else:
             raise ValueError("User does not exist")
