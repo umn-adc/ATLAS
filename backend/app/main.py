@@ -1,8 +1,9 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-from app.database.base import init_db
+from app.database.base import init_db, settings
 from app.modules.strategies.router import router as strategy_router
 from app.modules.views.router import router as views_router
 
@@ -24,6 +25,16 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
+    # Let the frontend call the API from the browser.
+    # Methods and headers must be opened up, or preflight for JSON POSTs fails.
+    # If allow_credentials is turned on later, never put "*" in cors_origins.
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=settings.cors_origins,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
     app.include_router(
         strategy_router,
         prefix="/api/strategies",
@@ -36,7 +47,7 @@ def create_app() -> FastAPI:
         tags=["Views"],
     )
 
-    @app.get("/health", tags=["Health"])
+    @app.get("/api/health", tags=["Health"])
     async def health():
         return {"status": "ok"}
 

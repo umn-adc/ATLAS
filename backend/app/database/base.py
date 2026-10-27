@@ -1,7 +1,10 @@
+import json
 from collections.abc import AsyncGenerator
 from pathlib import Path
+from typing import Annotated
 
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import field_validator
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.database.models_base import Base
@@ -10,6 +13,26 @@ from app.database.models_base import Base
 class Settings(BaseSettings):
     # Default: SQLite file in data/ directory (self-hosted friendly)
     database_url: str = "sqlite+aiosqlite:///./data/atlas.db"
+
+    # Browser origins allowed to call the API. Default is the Vite dev server.
+    # Override with a comma-separated env var, e.g.
+    # CORS_ORIGINS=http://localhost:5173,https://atlas.example.com
+    # NoDecode stops pydantic-settings from requiring JSON for list fields.
+    cors_origins: Annotated[list[str], NoDecode] = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ]
+
+    @field_validator("cors_origins", mode="before")
+    @classmethod
+    def split_cors_origins(cls, v: object) -> object:
+        """Accept a comma-separated string or a JSON list from the env var."""
+        if isinstance(v, str):
+            v = v.strip()
+            if v.startswith("["):
+                return json.loads(v)
+            return [origin.strip() for origin in v.split(",") if origin.strip()]
+        return v
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
