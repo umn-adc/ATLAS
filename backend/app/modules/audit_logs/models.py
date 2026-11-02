@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from typing import Any
 from uuid import UUID, uuid4
 
-from sqlalchemy import JSON, DateTime, String, func, Enum, Index, SmallInteger
+from sqlalchemy import JSON, DateTime, ForeignKey, String, func, Enum, SmallInteger
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database.models_base import Base
@@ -29,11 +29,11 @@ class AuditEvent(Base):
     )
 
     # separated for easier usage
-    actor_id: Mapped[str] = mapped_column(String(ID_MAX_LEN), nullable=False)
+    actor_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"), nullable=False)
     actor_type: Mapped[str] = mapped_column(String(TYPE_MAX_LEN), nullable=False)
 
     # separated for easier usage
-    target_id: Mapped[str | None] = mapped_column(String(ID_MAX_LEN))
+    target_id: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"), nullable=False)
     target_type: Mapped[str | None] = mapped_column(String(TYPE_MAX_LEN))
 
     # success, failure, or denied

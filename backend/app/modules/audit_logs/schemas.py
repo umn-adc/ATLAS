@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 # the actor of an audit log event
 class Actor(BaseModel):
     model_config = ConfigDict(frozen=True) # enforces unchangeable records
-    id: str # what specific entity performed the action
+    id: UUID # what specific entity performed the action
     type: str # what kind of entity performed the action (e.g. user, service, system)
     ip_address: str | None = None
     # user_agent: str | None = None # stores HTTP User-Agent header from request that triggered action
@@ -16,8 +16,8 @@ class Actor(BaseModel):
 # target of an audit log event
 class Target(BaseModel):
     model_config = ConfigDict(frozen=True) # enforces unchangeable records
+    id: UUID
     type: str # type of target (e.g. invoice, user)
-    id: str
 
 # outcome of an audit log event
 class Outcome(str, Enum): # Enum forces Outcome to only be one of the 3 possible values listed
