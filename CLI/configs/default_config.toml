@@ -21,3 +21,7 @@ level = "info"
 
 [deployment]
 default_working_dir = "./data/deployments"
+
+[fetching]
+symbols = ["AAPL", "NVDA", "MSFT", "GOOG", 
+"AMZN", "SPCX", "TSLA", "META", "AVGO", "LLY"]
