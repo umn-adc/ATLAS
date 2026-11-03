@@ -23,7 +23,7 @@ async def create_strategy(
     data: StrategyCreate,
     service: Annotated[StrategyService, Depends(get_strategies_service)],
 ):
-    return await service.create_strategy(user_id, data)
+    return service.create_strategy(user_id, data)
 
 
 @router.get(
@@ -48,7 +48,7 @@ async def get_strategy(
     user_id: Annotated[UUID, Depends(get_current_user_id)],
     service: Annotated[StrategyService, Depends(get_strategies_service)],
 ):
-    return await service.get_strategy(strategy_id, user_id)
+    return service.get_strategy(strategy_id, user_id)
 
 
 @router.patch(
@@ -62,7 +62,7 @@ async def update_strategy(
     data: StrategyUpdate,
     service: Annotated[StrategyService, Depends(get_strategies_service)],
 ):
-    return await service.update_strategy(strategy_id, user_id, data)
+    return service.update_strategy(strategy_id, user_id, data)
 
 
 @router.delete(
@@ -75,7 +75,7 @@ async def archive_strategy(
     user_id: Annotated[UUID, Depends(get_current_user_id)],
     service: Annotated[StrategyService, Depends(get_strategies_service)],
 ):
-    return await service.archive_strategy(strategy_id, user_id)
+    return service.archive_strategy(strategy_id, user_id)
 
 
 @router.post(
@@ -89,7 +89,7 @@ async def create_version(
     data: StrategyVersionCreate,
     service: Annotated[StrategyService, Depends(get_strategies_service)],
 ):
-    return await service.create_version(strategy_id, user_id, data)
+    return service.create_version(strategy_id, user_id, data)
 
 
 @router.get(
@@ -102,4 +102,4 @@ async def list_versions(
     user_id: Annotated[UUID, Depends(get_current_user_id)],
     service: Annotated[StrategyService, Depends(get_strategies_service)],
 ):
-    return await service.list_versions(strategy_id, user_id)
+    return service.list_versions(strategy_id, user_id)
