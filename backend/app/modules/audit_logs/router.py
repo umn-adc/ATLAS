@@ -8,10 +8,22 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, status
 
 from app.modules.audit_logs.dependencies import get_audit_log_service, get_current_user_id
-from app.modules.audit_logs.schemas import AuditEvent
+from app.modules.audit_logs.schemas import AuditEvent, AuditEventCreate
 from app.modules.audit_logs.service import AuditService
 
 router = APIRouter()
+
+@router.post(
+    "/api/audit-logs",
+    response_model=[AuditEvent],
+    status_code=status.HTTP_201_CREATED,
+)
+async def create_logs(
+    user_id: Annotated[UUID, Depends(get_current_user_id)],
+    service: Annotated[AuditService, Depends(get_audit_log_service)],
+    #data: AuditEventCreate
+):
+    return await service.log_action(user_id, before_datetime)
 
 @router.get(
     "/api/audit-logs",

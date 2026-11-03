@@ -4,7 +4,7 @@ from uuid import UUID
 from app.modules.audit_logs.schemas import (
     AuditEventCreate,
     AuditEvent,
-    Actor
+    WarningLevel
 )
 
 from app.modules.audit_logs.repository import AuditRepository
@@ -17,11 +17,22 @@ class AuditService:
             self.repository = repository
 
 
-    def log_action(self, user_id: UUID, action: str, actor: Actor, created_at: datetime, details: dict) -> AuditEvent:
+    def log_action(self, user_id: UUID, warning_level: Warning, data: AuditEventCreate) -> AuditEvent:
         """Records a new audit event"""
+        action = data.action
+        actor = data.actor
+        target = data.target
+        outcome = data.outcome
+        timestamp = datetime.now() #Needs timezone info
 
-        #returns created logs from repository...
-        raise NotImplementedError
+        # id: UUID # unique id
+        #     details: dict # JSON - old/new values
+        #     warning_level: WarningLevel # degree of severity/attention needed
+        #     schema_version: int = 1 # records iterations of schema
+
+
+        return self.repository.create()
+        #raise NotImplementedError
 
     def get_logs(self, user_id: UUID, before_datetime: datetime) -> list[AuditEvent]:
         """Get user logs"""
