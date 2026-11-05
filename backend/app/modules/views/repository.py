@@ -59,3 +59,8 @@ class ViewsRepository:
     async def delete(self, view: View) -> None:
         await self.session.delete(view)
         await self.session.commit()
+
+    async def get_by_username(self, username):
+        statement = select(View).where(View.name == str(username))
+        result = await self.session.execute(statement)
+        return result.scalar_one_or_none()

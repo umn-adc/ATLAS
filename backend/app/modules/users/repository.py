@@ -87,7 +87,7 @@ class UserRepository:
             Execute and return all results as a list.
         """
         filter = select(User)
-        if (include_inactive == False):
+        if include_inactive == False:
             filter = filter.where(User.is_active == True)
         users = self.session.scalars(filter).all()
         return users
