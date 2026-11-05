@@ -11,7 +11,7 @@ class LogsNotFoundError(HTTPException):
     def __init__(self, log_id: UUID):
         super().__init__(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Audit log entry with ID '{log_id}' was not found.",
+            detail=f"The requested Audit Log Entry or Entries with ID '{log_id}' was not found.",
         )
 
 
