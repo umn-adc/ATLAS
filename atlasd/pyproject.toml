@@ -1,0 +1,38 @@
+[project]
+name = "atlasd"
+version = "0.1.0"
+requires-python = ">=3.13,<3.14"
+
+# msgspec: wire protocol between atlasd and strategy processes (msgpack + typed Structs)
+dependencies = [
+    "msgspec",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "ruff",
+    "pyright",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint.isort]
+# Tell ruff which modules are our own code and not third-party packages.
+known-first-party = ["atlasd"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+# Put the repo root on the import path so `from atlasd.protocol import ...` resolves.
+pythonpath = [".."]
+
+[tool.pyright]
+pythonVersion = "3.13"
+typeCheckingMode = "basic"
+exclude = ["**/__pycache__", ".venv"]
+reportMissingImports = true
+reportMissingTypeStubs = false

@@ -6,10 +6,9 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 export default function AppShell({ children }: { children: React.ReactNode }) {
     return (
         <SidebarProvider>
-            <div className="flex flex-col">
+            <AtlasSidebar />
+            <div className="flex flex-col w-full">
                 <Header />
-                <AtlasSidebar />
-
                 {children}
                 <Footer />
             </div>

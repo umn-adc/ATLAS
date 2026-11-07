@@ -127,7 +127,12 @@ async def delete_user(
     Raises:
         404: User not found
     """
-    await service.delete_user(user_id)
+    try:
+        await service.delete_user(user_id)
+    except ValueError:
+        raise HTTPException(status_code=404, detail="User not found")
+    else:
+        return status.HTTP_204_NO_CONTENT
 
 
 @router.post(
