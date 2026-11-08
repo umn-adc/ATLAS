@@ -14,7 +14,7 @@ strategy_dir = "./data/strategies"
 log_dir = "./data/logs"
 
 [daemon]
-socket_path = "/tmp/atlasd.sock"
+socket_path = "/tmp/atlasdaemon.sock"
 
 [logging]
 level = "info"
