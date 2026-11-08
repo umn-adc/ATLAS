@@ -5,8 +5,8 @@ from decimal import Decimal
 import msgspec
 import pytest
 
-from atlas_brokers.models import Fill, Instrument, OrderState
-from atlasdaemon.protocol import (
+from atlas_sdk.brokers.models import Fill, Instrument, OrderState
+from atlas_sdk.protocol import (
     _HEADER,
     MAX_FRAME,
     Bar,
@@ -16,9 +16,9 @@ from atlasdaemon.protocol import (
     Start,
     Stop,
     Submit,
+    daemon_decoder,
     encode,
     read_frame,
-    router_decoder,
     strategy_decoder,
 )
 
@@ -40,14 +40,14 @@ def reader_with(data: bytes) -> asyncio.StreamReader:
 @pytest.mark.parametrize(
     "msg, decoder",
     [
-        (Start(1, {"alpaca": 1}, [AAPL], {}, {}), router_decoder),
+        (Start(1, {"alpaca": 1}, [AAPL], {}, {}), daemon_decoder),
         (
             Bar("AAPL.ALPACA", "alpaca-iex", "1m", TS, TS, PX, PX, PX, PX, Decimal(1)),
-            router_decoder,
+            daemon_decoder,
         ),
-        (OrderUpdate("c1", OrderState("filled", Decimal(5), PX, TS), RAW), router_decoder),
-        (Filled(Fill("c1", "t1", Decimal(5), PX, Decimal("0.01"), "USD", TS)), router_decoder),
-        (Stop(), router_decoder),
+        (OrderUpdate("c1", OrderState("filled", Decimal(5), PX, TS), RAW), daemon_decoder),
+        (Filled(Fill("c1", "t1", Decimal(5), PX, Decimal("0.01"), "USD", TS)), daemon_decoder),
+        (Stop(), daemon_decoder),
         (Submit(1, RAW), strategy_decoder),
     ],
 )

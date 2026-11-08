@@ -10,7 +10,7 @@ Each adapter is split into two halves:
 The two halves live in different packages:
 
 ```text
-atlas_brokers/
+atlas_sdk/brokers/
 └── <broker_name>/
     └── orders.py
 
@@ -52,8 +52,8 @@ class AlpacaOrder(msgspec.Struct, tag="alpaca"):
 `validate(order, inst, now)` checks the broker's own rules, like lot size, tick size, minimum
 notional and trading hours. It returns a reason string, or `None` if the order is fine.
 
-`risk_view(order, inst, ref_px)` turns the order into a `RiskView`. The Risk Gate only reads
-`RiskView`, so it does not need to know anything about any one broker. `ref_px` is a price to use
+`risk_view(order, inst, ref_price)` turns the order into a `RiskView`. The Risk Gate only reads
+`RiskView`, so it does not need to know anything about any one broker. `ref_price` is a price to use
 when the order has none, like the last trade for a market order:
 
 ```python
@@ -111,7 +111,7 @@ class Instrument(msgspec.Struct):
     venue: str
     symbol: str                   # the broker's own spelling
     tick_size: Decimal
-    lot_size: Decimal
+    qty_step: Decimal
     min_qty: Decimal
     min_notional: Decimal | None
     tradable: bool
@@ -128,13 +128,13 @@ Every adapter inherits from two base classes. Anything marked `@abstractmethod` 
 Python refuses to create an adapter that is missing one.
 
 ```python
-class BrokerOrders[O, U](ABC):               # atlas_brokers/base.py
+class BrokerOrders[O, U](ABC):               # atlas_sdk/brokers/base.py
     name: str                                # must equal the order type's tag
     version: int                             # bump on any change to O or U
     order_type: type[O]
     update_type: type[U]
     def validate(self, order, inst, now) -> str | None
-    def risk_view(self, order, inst, ref_px) -> RiskView
+    def risk_view(self, order, inst, ref_price) -> RiskView
     def normalize(self, update) -> OrderState
     def to_sim(self, order) -> SimOrder | None
 
@@ -189,7 +189,7 @@ different client instances.
 
 ## Adding a broker
 
-1. `atlas_brokers/<name>/orders.py`: a `BrokerOrders` subclass with its tagged order type,
+1. `atlas_sdk/brokers/<name>/orders.py`: a `BrokerOrders` subclass with its tagged order type,
    update type, `validate()`, `risk_view()`, `normalize()`, `to_sim()`, and whichever helpers
    the venue supports
 2. `atlasdaemon/broker_gateway/<name>/client.py`: a `BrokerClient` subclass

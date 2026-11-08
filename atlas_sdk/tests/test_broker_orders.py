@@ -1,7 +1,7 @@
 import msgspec
 import pytest
 
-from atlas_brokers.base import BrokerOrders
+from atlas_sdk.brokers.base import BrokerOrders
 
 
 class FakeOrder(msgspec.Struct, tag="fake"):

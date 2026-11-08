@@ -67,9 +67,16 @@ uv run alembic upgrade head && uv run alembic check  # Verify migrations in sync
 
 ## Documentation
 
-Project documentation is maintained with MkDocs.
+Docs live in a `docs/` folder next to the code they describe. Project-wide docs live in the root [`docs/`](docs/).
 
-Documentation covers architecture, development setup, module interfaces, and contributor onboarding as these areas are developed.
+- **atlasdaemon** (live trading daemon)
+  - [Message Bus](atlasdaemon/docs/message_bus.md)
+- **atlas_sdk** (what strategies import)
+  - [Protocol](atlas_sdk/docs/protocol.md)
+  - [Broker Adapters](atlas_sdk/docs/broker_adapters.md)
+- [CLI](CLI/README.md)
+- [Frontend](frontend/README.md)
+- [Options Analytics](backend/packages/options_analytics/README.md)
 
 ## License
 GPLv3

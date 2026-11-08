@@ -17,7 +17,7 @@ class Instrument(msgspec.Struct, frozen=True):
     venue: str
     symbol: str  # the broker's own spelling, e.g. "BTCUSD"
     tick_size: Decimal
-    lot_size: Decimal
+    qty_step: Decimal
     min_qty: Decimal
     min_notional: Decimal | None
     tradable: bool
@@ -39,7 +39,7 @@ class OrderState(msgspec.Struct, frozen=True):
 
     status: OrderStatus
     filled_qty: Decimal  # cumulative
-    avg_px: Decimal | None
+    avg_price: Decimal | None
     ts: datetime
 
 
@@ -49,9 +49,9 @@ class Fill(msgspec.Struct, frozen=True):
     cid: str
     trade_id: str
     qty: Decimal
-    px: Decimal
+    price: Decimal
     fee: Decimal
-    fee_ccy: str
+    fee_currency: str
     ts: datetime
 
 
@@ -62,8 +62,8 @@ class SimOrder(msgspec.Struct, frozen=True):
     side: Side
     qty: Decimal
     type: Literal["market", "limit", "stop", "stop_limit"]
-    limit_px: Decimal | None = None
-    stop_px: Decimal | None = None
+    limit_price: Decimal | None = None
+    stop_price: Decimal | None = None
     tif: Literal["day", "gtc", "ioc", "fok"] = "gtc"
     children: tuple["SimOrder", ...] = ()  # exits attached to this order, e.g. a bracket
     oco: bool = False  # filling one child cancels the others

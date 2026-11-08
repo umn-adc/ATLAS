@@ -3,10 +3,13 @@ name = "atlasdaemon"
 version = "0.1.0"
 requires-python = ">=3.13,<3.14"
 
-# msgspec: wire protocol between atlasdaemon and strategy processes (msgpack + typed Structs)
 dependencies = [
+    "atlas-sdk",
     "msgspec",
 ]
+
+[tool.uv.sources]
+atlas-sdk = { path = "../atlas_sdk", editable = true }
 
 [dependency-groups]
 dev = [
@@ -24,13 +27,13 @@ extend-exclude = ["*.md"]
 
 [tool.ruff.lint.isort]
 # Tell ruff which modules are our own code and not third-party packages.
-known-first-party = ["atlasdaemon", "atlas_brokers"]
+known-first-party = ["atlasdaemon", "atlas_sdk"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
-# Put the repo root on the import path so `from atlasdaemon.protocol import ...` resolves.
+# Put the repo root on the import path so `from atlasdaemon... import ...` resolves.
 pythonpath = [".."]
 
 [tool.pyright]

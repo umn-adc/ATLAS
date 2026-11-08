@@ -13,7 +13,7 @@ class BrokerAck(msgspec.Struct, frozen=True):
 class Position(msgspec.Struct, frozen=True):
     instrument_id: str
     qty: Decimal  # negative when short
-    avg_px: Decimal
+    avg_price: Decimal
 
 
 class Account(msgspec.Struct, frozen=True):

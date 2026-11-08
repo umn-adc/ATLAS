@@ -5,7 +5,7 @@ from typing import Protocol, runtime_checkable
 
 import msgspec
 
-from atlas_brokers.models import Instrument, OrderState, RiskView, Side, SimOrder
+from atlas_sdk.brokers.models import Instrument, OrderState, RiskView, Side, SimOrder
 
 
 class BrokerOrders[O: msgspec.Struct, U: msgspec.Struct](ABC):
@@ -20,9 +20,9 @@ class BrokerOrders[O: msgspec.Struct, U: msgspec.Struct](ABC):
     @abstractmethod
     def validate(self, order: O, inst: Instrument, now: datetime) -> str | None: ...
 
-    # Numbers the Risk Gate checks. ref_px prices orders that have no price, like market orders.
+    # Numbers the Risk Gate checks. ref_price prices orders that have no price, like market orders.
     @abstractmethod
-    def risk_view(self, order: O, inst: Instrument, ref_px: Decimal) -> RiskView: ...
+    def risk_view(self, order: O, inst: Instrument, ref_price: Decimal) -> RiskView: ...
 
     # The broker's order update -> common OrderState.
     @abstractmethod
