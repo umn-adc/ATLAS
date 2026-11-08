@@ -1,7 +1,5 @@
 # Broker adapters
 
-_Planned. Only the base classes exist so far._
-
 A **broker adapter** is everything ATLAS needs to trade on one broker. 
 
 Each adapter is split into two halves:
