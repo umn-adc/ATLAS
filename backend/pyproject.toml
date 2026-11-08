@@ -23,9 +23,6 @@ dev = [
     "pytest-asyncio",
     "ruff",
     "pyright",
-    "mkdocs",
-    "mkdocs-material",
-    "mkdocstrings[python]",
 ]
 
 [tool.ruff]

@@ -3,10 +3,30 @@ revision = 1
 requires-python = "==3.13.*"
 
 [[package]]
+name = "atlas-sdk"
+version = "0.1.0"
+source = { editable = "../atlas_sdk" }
+dependencies = [
+    { name = "msgspec" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "msgspec" }]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pyright" },
+    { name = "pytest" },
+    { name = "pytest-asyncio" },
+    { name = "ruff" },
+]
+
+[[package]]
 name = "atlasdaemon"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "atlas-sdk" },
     { name = "msgspec" },
 ]
 
@@ -19,7 +39,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "msgspec" }]
+requires-dist = [
+    { name = "atlas-sdk", editable = "../atlas_sdk" },
+    { name = "msgspec" },
+]
 
 [package.metadata.requires-dev]
 dev = [

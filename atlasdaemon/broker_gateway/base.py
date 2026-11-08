@@ -4,8 +4,8 @@ from typing import ClassVar
 
 import msgspec
 
-from atlas_brokers.base import BrokerOrders
-from atlas_brokers.models import Fill, Instrument
+from atlas_sdk.brokers.base import BrokerOrders
+from atlas_sdk.brokers.models import Fill, Instrument
 from atlasdaemon.broker_gateway.models import Account, BrokerAck, Position, RateLimit, Reconnected
 
 

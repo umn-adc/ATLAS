@@ -1,6 +1,6 @@
 # protocol.py
 
-`atlasdaemon/protocol.py` defines every message that the daemon and a strategy process can send each other.
+`atlas_sdk/protocol.py` defines every message that the daemon and a strategy process can send each other.
 It also defines the rules for turning those messages into bytes on the pipe.
 
 Each kind of message is a class:
@@ -25,16 +25,16 @@ A `Bar` is sent through a pipe as:
 
 ## Message Types
 
-There are two types of messages to be sent through the pipe from _router <---> strategy process_
+There are two types of messages to be sent through the pipe from _message bus <---> strategy process_
 
 ```python
-RouterMsg = Start | Bar | SubmitAck | Error | OrderUpdate | Filled | Stop  # daemon -> strategy
+DaemonMsg = Start | Bar | SubmitAck | Error | OrderUpdate | Filled | Stop  # daemon -> strategy
 StrategyMsg = Ready | Submit | Replace | Cancel | State                    # strategy -> daemon
 ```
 
-The strategy process runs outside the daemon and it submits orders back to the router.
-The router will then send the order to the risk gate then the order manager and so on.
-The important consideration is that strategies only talk to the **Event Router**.
+The strategy process runs outside the daemon and it submits orders back to the message bus.
+The message bus will then send the order to the risk gate then the order manager and so on.
+The important consideration is that strategies only talk to the **Message Bus**.
 
 ## Message Framing
 

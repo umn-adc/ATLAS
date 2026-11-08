@@ -5,7 +5,7 @@ from decimal import Decimal
 
 import msgspec
 
-from atlas_brokers.models import Fill, Instrument, OrderState
+from atlas_sdk.brokers.models import Fill, Instrument, OrderState
 
 PROTOCOL_VERSION = 1
 MAX_FRAME = 16 * 1024 * 1024  # 16 MB
@@ -93,11 +93,11 @@ class State(Msg):
     state: dict  # handed back in Start.state on restart
 
 
-RouterMsg = Start | Bar | SubmitAck | Error | OrderUpdate | Filled | Stop
+DaemonMsg = Start | Bar | SubmitAck | Error | OrderUpdate | Filled | Stop
 StrategyMsg = Ready | Submit | Replace | Cancel | State
 
 _encoder = msgspec.msgpack.Encoder()
-router_decoder = msgspec.msgpack.Decoder(RouterMsg)  # used by strategies
+daemon_decoder = msgspec.msgpack.Decoder(DaemonMsg)  # used by strategies
 strategy_decoder = msgspec.msgpack.Decoder(StrategyMsg)  # used by atlasdaemon
 
 

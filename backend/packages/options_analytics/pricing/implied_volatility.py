@@ -1,9 +1,9 @@
 """Implied volatility solver."""
-import math 
+import math
 
+from packages.options_analytics.pricing.black_scholes import black_scholes_call, black_scholes_put
+from packages.options_analytics.pricing.greeks import vega
 from packages.options_analytics.schemas import OptionType
-from greeks import vega
-from black_scholes import black_scholes_call, black_scholes_put
 
 
 class ImpliedVolatilityError(Exception):
