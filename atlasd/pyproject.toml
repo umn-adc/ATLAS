@@ -1,9 +1,9 @@
 [project]
-name = "atlasd"
+name = "atlasdaemon"
 version = "0.1.0"
 requires-python = ">=3.13,<3.14"
 
-# msgspec: wire protocol between atlasd and strategy processes (msgpack + typed Structs)
+# msgspec: wire protocol between atlasdaemon and strategy processes (msgpack + typed Structs)
 dependencies = [
     "msgspec",
 ]
@@ -19,19 +19,23 @@ dev = [
 [tool.ruff]
 line-length = 100
 target-version = "py313"
+# Docs hold pseudocode; don't let `ruff format` rewrite their code blocks.
+extend-exclude = ["*.md"]
 
 [tool.ruff.lint.isort]
 # Tell ruff which modules are our own code and not third-party packages.
-known-first-party = ["atlasd"]
+known-first-party = ["atlasdaemon", "atlas_brokers"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
-# Put the repo root on the import path so `from atlasd.protocol import ...` resolves.
+asyncio_default_fixture_loop_scope = "function"
+# Put the repo root on the import path so `from atlasdaemon.protocol import ...` resolves.
 pythonpath = [".."]
 
 [tool.pyright]
 pythonVersion = "3.13"
+extraPaths = [".."]
 typeCheckingMode = "basic"
 exclude = ["**/__pycache__", ".venv"]
 reportMissingImports = true

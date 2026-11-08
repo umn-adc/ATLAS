@@ -1,13 +1,13 @@
 # protocol.py
 
-`atlasd/protocol.py` defines every message that the daemon and a strategy process can send each other.
+`atlasdaemon/protocol.py` defines every message that the daemon and a strategy process can send each other.
 It also defines the rules for turning those messages into bytes on the pipe.
 
 Each kind of message is a class:
 
 ```python
 class Bar(Msg):
-    symbol: str
+    instrument_id: str
     close: Decimal
     ...
 ```
@@ -20,7 +20,7 @@ arrived and which event it should build.
 A `Bar` is sent through a pipe as:
 
 ```json
-{"t": "Bar", "symbol": "AAPL", "timeframe": "1m", "close": "187.25", ...}
+{"t": "Bar", "instrument_id": "AAPL.ALPACA", "timeframe": "1m", "close": "187.25", ...}
 ```
 
 ## Message Types
@@ -28,8 +28,8 @@ A `Bar` is sent through a pipe as:
 There are two types of messages to be sent through the pipe from _router <---> strategy process_
 
 ```python
-RouterMsg = Start | Bar | OrderUpdate      # daemon -> strategy
-StrategyMsg = Ready | Submit               # strategy -> daemon
+RouterMsg = Start | Bar | SubmitAck | Error | OrderUpdate | Filled | Stop  # daemon -> strategy
+StrategyMsg = Ready | Submit | Replace | Cancel | State                    # strategy -> daemon
 ```
 
 The strategy process runs outside the daemon and it submits orders back to the router.
@@ -49,6 +49,8 @@ Frames are a 4 byte big-endian length followed by a msgpack body.
 ```
 
 `encode()` builds a **frame**. It turns the message into bytes and puts the length in front.
+
+`write_frame()` encodes a message, writes it, and waits for the stream to drain.
 
 `read_frame()` reads one **frame**. It reads the 4 byte length first, then reads exactly that
 many bytes and decodes them into a message.
