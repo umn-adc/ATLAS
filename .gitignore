@@ -7,5 +7,5 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .vscode
-/CLI/build
-/CLI/CLI11
+/cli/build
+/cli/CLI11

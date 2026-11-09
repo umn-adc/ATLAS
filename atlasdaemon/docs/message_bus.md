@@ -28,7 +28,8 @@ Each deployment gets its own outbound queue with a fixed maximum size.
 When the queue fills, the rule depends on what's in it.
 
 Order events are never dropped, but the oldest (stale) data is dropped.
-The bus counts the drops and tells the deployment how much it missed.
+Every data message has a `seq` number that counts up per topic. If a deployment gets seq 41 and then 45,
+it knows it missed 3.
 A deployment's order events are sent before its queued data.
 
 This architecture could use obvious improvements
@@ -57,3 +58,21 @@ The answer (`SubmitAck` or `Error`) comes back later, and the bus sends it to th
 Each deployment can have at most 32 requests waiting for an answer.
 Past that, its next request gets `Error("too many pending requests")`.
 This stops one buggy strategy from flooding the Risk Gate or using up the broker's rate limit.
+
+## Stopping a deployment
+
+When a deployment is stopped, the bus stops sending it new market data and refuses new requests with an `Error`.
+Order events still go through, and requests already waiting get their answer.
+
+Then the bus sends `Stop`. The strategy saves its last `State` and exits.
+If it hasn't exited after 5 seconds, the bus tells the *Supervisor* to kill it.
+
+The bus does not cancel open orders. Whether to cancel them is decided by the *Order Manager*, not the bus.
+
+## Open questions
+
+- How big is each deployment's queue?
+- How long does the bus wait for `Ready` before giving up?
+- Should a deployment that keeps dropping data be stopped?
+- When a deployment stops, should its open orders be canceled?
+- Is 32 pending requests the right limit?
