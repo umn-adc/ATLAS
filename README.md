@@ -74,7 +74,7 @@ Docs live in a `docs/` folder next to the code they describe. Project-wide docs 
 - **atlas_sdk** (what strategies import)
   - [Protocol](atlas_sdk/docs/protocol.md)
   - [Broker Adapters](atlas_sdk/docs/broker_adapters.md)
-- [CLI](CLI/README.md)
+- [CLI](cli/README.md)
 - [Frontend](frontend/README.md)
 - [Options Analytics](backend/packages/options_analytics/README.md)
 

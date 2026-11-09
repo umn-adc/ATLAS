@@ -12,15 +12,15 @@ class Bar(Msg):
     ...
 ```
 
-Every message inherits from `Msg`. `Msg` gives each message a tag: a field named `t` that
-holds the message's type name. When a `Bar` is encoded, the bytes include `"t": "Bar"`.
+Every message inherits from `Msg`. `Msg` gives each message a tag: a field named `msg` that
+holds the message's type name. When a `Bar` is encoded, the bytes include `"msg": "Bar"`.
 The consumer (strategy process) reads the tag first, so it knows which kind of message
 arrived and which event it should build.
 
 A `Bar` is sent through a pipe as:
 
 ```json
-{"t": "Bar", "instrument_id": "AAPL.ALPACA", "timeframe": "1m", "close": "187.25", ...}
+{"msg": "Bar", "instrument_id": "AAPL.ALPACA", "timeframe": "1m", "close": "187.25", ...}
 ```
 
 ## Message Types

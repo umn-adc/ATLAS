@@ -12,8 +12,8 @@ MAX_FRAME = 16 * 1024 * 1024  # 16 MB
 _HEADER = struct.Struct(">I")  # big-endian unsigned 4-byte int
 
 
-class Msg(msgspec.Struct, tag=True, tag_field="t"):
-    """Base for all wire messages. Tag is the class name."""
+class Msg(msgspec.Struct, tag=True, tag_field="msg"):
+    """Base for all messages sent through the pipe. Tag is the class name."""
 
 
 # atlasdaemon -> strategy
