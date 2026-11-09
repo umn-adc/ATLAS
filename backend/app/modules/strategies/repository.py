@@ -76,7 +76,6 @@ class StrategyVersionRepository:
         await self.session.refresh(version)
         return version
 
-
     async def list_by_strategy(self, strategy_id: UUID) -> list[StrategyVersion]:
         """Return all versions for a strategy, ordered by created_at desc."""
         stmt = (
@@ -85,11 +84,4 @@ class StrategyVersionRepository:
             .order_by(StrategyVersion.created_at.desc())
         )
         result = await self.session.execute(stmt)
-        return list(result.scalars().all())
-
-    async def list_by_strategy(self, strategy_id: UUID) -> list[StrategyVersion]:
-        statement = select(StrategyVersion).where(StrategyVersion.strategy_id == strategy_id)
-
-        result = await self.session.execute(statement)
-
         return list(result.scalars().all())
