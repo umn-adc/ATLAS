@@ -1,3 +1,4 @@
+#include "start_data_fetch.h"
 #include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
 #include <iostream>
@@ -80,17 +81,4 @@ void start_data_fetch(char* api_key, char* secret_key, int num_tickers, char** t
         std::cerr << "Request failed with HTTP status code: " << r.status_code << "\n";
         std::cerr << "Response body: " << r.text << "\n";
     }
-}
-
-// Example usage
-int main() {
-    char api_key[] = "PKR3IHCW22Q3IIWPTQRUNJINWC";
-    char secret_key[] = "DuWbkQSo1ZvsjJfCi3eYpSeNbqoLNg4t3TcDEZjFL2az";
-    char aapl[] = "AAPL";
-    char tsla[] = "TSLA";
-    char msft[] = "MSFT";
-    char* tickers[] = { aapl, tsla, msft };
-
-    start_data_fetch(api_key, secret_key, 3, tickers);
-    return 0;
 }

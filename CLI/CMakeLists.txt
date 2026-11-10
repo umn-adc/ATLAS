@@ -16,7 +16,8 @@ set_target_properties(atlas PROPERTIES
 
 add_subdirectory(tomlplusplus)
 add_subdirectory(cli11)
-
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/modules/data_fetching
+                 ${CMAKE_CURRENT_BINARY_DIR}/data_fetching_build)
 
 include_directories(
     PRIVATE
@@ -28,4 +29,5 @@ include_directories(
 target_link_libraries(atlas
     PRIVATE
         CLI11::CLI11
+        data_fetch_lib
             )
