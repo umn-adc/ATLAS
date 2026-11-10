@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     if (atlas.got_subcommand("init")) {
         subcommands::initialize();
     }
-    if (atlas.got_subcommand("config")){
+    if (atlas.got_subcommand("config")) {
         subcommands::configure();
     }
 

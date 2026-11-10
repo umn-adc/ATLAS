@@ -12,9 +12,20 @@ table tbl;
 namespace subcommands {
     // creates all subcommands and flags via CLI11 tools
     void CLI_setup(CLI::App& atlas) {
-        atlas.require_subcommand(1, 1);    // handles the maximum number of 
+        atlas.require_subcommand(1, 1);    // handles the maximum number of subcommands (set to 1)
+
+        // subcommand setup
         CLI::App* init = atlas.add_subcommand("init", "Creates a default config file.");
         CLI::App* config = atlas.add_subcommand("config", "Root for config changes.");
+
+        // flag setup
+        bool daemon = false;
+        // Uncomment after implementing spawn and fetch_data subcommands
+        // spawn->add_flag("-d, -daemonize", daemon, "Creates the process as a daemon."
+        //     "Runs seperately from main processes.");
+        // fetch_data->add_flag("-d, -daemonize", daemon, "Creates the process as a daemon."
+        //     "Runs seperately from main processes.");
+
     }
     
     // creates/overwrites config file from default_config.toml
@@ -66,6 +77,48 @@ namespace subcommands {
 
         return 0;
     }
+ 
+        #if defined(__unix__) || defined(__unix) || defined(unix) || defined(__APPLE__)
+        
+            #include <stdio.h>
+            #include <sys/stat.h>
+            #include <sys/types.h>
+            #include <unistd.h>
 
-    
+            void daemonize() {
+                pid_t process_id = fork();
+                if (process_id < 0) {       // checks if fork() ran properly
+                    perror("Fork failed.");
+                    exit(1);
+                }
+
+                if (process_id > 0) {   // kills parent
+                    exit(0);
+                }
+                if (process_id < 0) {   // first child becomes session leader
+                    exit(1);
+                }
+
+                process_id = fork();    // create second child to avoid reacquiring a terminal
+                if (process_id < 0) {
+                    perror("Fork failed.");
+                    exit(1);
+                }
+                if (process_id > 0) {
+                    exit(0);
+                }
+
+
+                umask(002);     // user and group can read/write, others can only read.
+                chdir("/");     // working dir is current dir
+
+                // redirect standard I/O to allow daemon to act completely separately
+                close(STDIN_FILENO);
+                close(STDOUT_FILENO);
+                close(STDERR_FILENO);
+            }
+        #elif _WIN32
+            
+            
+        #endif
 }
