@@ -81,6 +81,7 @@
   --gain: #027a48;
   --gain-foreground: #027a48;
   --gain-muted: #ecfdf3;
+  --gain-border: #bbf7d0;
   --loss: #b42318;
   --loss-foreground: #b42318;
   --loss-muted: #fef3f2;
@@ -135,6 +136,7 @@
   --gain: #34d399;
   --gain-foreground: #34d399;
   --gain-muted: #0c2a20;
+  --gain-border: #14503a;
   --loss: #fb7185;
   --loss-foreground: #fb7185;
   --loss-muted: #33111a;
@@ -185,6 +187,7 @@
   --color-gain: var(--gain);
   --color-gain-foreground: var(--gain-foreground);
   --color-gain-muted: var(--gain-muted);
+  --color-gain-border: var(--gain-border);
   --color-loss: var(--loss);
   --color-loss-foreground: var(--loss-foreground);
   --color-loss-muted: var(--loss-muted);
