@@ -16,24 +16,42 @@ class DeploymentStatus(StrEnum):
 
 
 TERMINAL_STATUSES = frozenset(
-    {DeploymentStatus.STOPPED, DeploymentStatus.FAILED, DeploymentStatus.CRASHED}
+    {
+        DeploymentStatus.STOPPED,
+        DeploymentStatus.FAILED,
+        DeploymentStatus.CRASHED,
+    }
 )
 
 
-def can_transition(current: DeploymentStatus, target: DeploymentStatus) -> bool:
-    """
-    Check whether a deployment may move from one status to another.
+# Define all permitted deployment state transitions.
+ALLOWED_TRANSITIONS = {
+    DeploymentStatus.PENDING: {
+        DeploymentStatus.STARTING,
+        DeploymentStatus.FAILED,
+    },
+    DeploymentStatus.STARTING: {
+        DeploymentStatus.RUNNING,
+        DeploymentStatus.FAILED,
+    },
+    DeploymentStatus.RUNNING: {
+        DeploymentStatus.STOPPING,
+        DeploymentStatus.CRASHED,
+    },
+    DeploymentStatus.STOPPING: {
+        DeploymentStatus.STOPPED,
+        DeploymentStatus.CRASHED,
+    },
+}
 
-    Args:
-        current: The deployment's current status
-        target: The status it would move to
 
-    Returns:
-        bool: True if the transition is allowed
+def can_transition(
+    current: DeploymentStatus,
+    target: DeploymentStatus,
+) -> bool:
+    """Check whether a deployment status transition is allowed."""
 
-    Implementation:
-        Define the allowed transitions (e.g. pending -> starting -> running -> stopping
-        -> stopped, plus failure paths to failed / crashed).
-        Terminal statuses cannot transition anywhere.
-    """
-    raise NotImplementedError
+    if current in TERMINAL_STATUSES:
+        return False
+
+    return target in ALLOWED_TRANSITIONS.get(current, set())
