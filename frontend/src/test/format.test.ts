@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatCurrency, formatPercent, formatPrice, formatSignedCurrency, formatSignedNumber, formatSignedPercent, pnlTone } from '@/lib/format';
+import { formatCurrency, formatDuration, formatMarketDate, formatMarketTime, formatNumber, formatPercent, formatPnl, formatPrice, formatSignedCurrency, formatSignedNumber, formatSignedPercent, marketDayKey, minusSign, pnlTone } from '@/lib/format';
 
 describe('format currency', () => {
     it('should return $2,847,392 when given 2847392', () => {
@@ -112,5 +112,100 @@ describe('pnl tone', () => {
 
     it('should return neutral when given 0', () => {
         expect(pnlTone(0)).toBe('neutral');
+    });
+});
+
+describe('format number', () => {
+    it('should return 2,871,125 when given 2871125', () => {
+        expect(formatNumber(2871125)).toBe('2,871,125');
+    });
+
+    it('should return 5,623.50 when given 5623.5 and 2 digits', () => {
+        expect(formatNumber(5623.5, 2)).toBe('5,623.50');
+    });
+
+    it('should return 5,621.00 when given 5621 and 2 digits', () => {
+        expect(formatNumber(5621, 2)).toBe('5,621.00');
+    });
+});
+
+describe('format pnl', () => {
+    it('should return +$3,250 when given 3250', () => {
+        expect(formatPnl(3250)).toBe('+$3,250');
+    });
+
+    it('should return -$562.50 when given -562.5', () => {
+        expect(formatPnl(-562.5)).toBe('-$562.50');
+    });
+
+    it('should return $0 when given 0', () => {
+        expect(formatPnl(0)).toBe('$0');
+    });
+});
+
+describe('minus sign', () => {
+    it('should swap a leading hyphen for a real minus sign', () => {
+        expect(minusSign('-3.2%')).toBe('−3.2%');
+    });
+
+    it('should leave positive numbers alone', () => {
+        expect(minusSign('+$8,234')).toBe('+$8,234');
+    });
+
+    it('should leave hyphens inside the text alone', () => {
+        expect(minusSign('v2.4.1-8f2a')).toBe('v2.4.1-8f2a');
+    });
+});
+
+describe('format duration', () => {
+    it('should return 3d 4h for 3 days and 4 hours', () => {
+        expect(formatDuration((3 * 24 + 4) * 3_600_000)).toBe('3d 4h');
+    });
+
+    it('should return 4h 12m for 4 hours and 12 minutes', () => {
+        expect(formatDuration(4 * 3_600_000 + 12 * 60_000)).toBe('4h 12m');
+    });
+
+    it('should return 12m for 12 minutes and 30 seconds', () => {
+        expect(formatDuration(12 * 60_000 + 30_000)).toBe('12m');
+    });
+
+    it('should return 2s for 2 seconds', () => {
+        expect(formatDuration(2_000)).toBe('2s');
+    });
+
+    it('should return 0s for a negative duration', () => {
+        expect(formatDuration(-5_000)).toBe('0s');
+    });
+});
+
+describe('market time', () => {
+    // 14:45:02 UTC is 10:45:02 in New York while daylight saving time is on
+    const morning = '2026-10-26T14:45:02Z';
+
+    it('should format the clock time in Eastern time', () => {
+        expect(formatMarketTime(morning)).toBe('10:45:02');
+    });
+
+    it('should drop the seconds when asked', () => {
+        expect(formatMarketTime(morning, false)).toBe('10:45');
+    });
+
+    it('should show midnight as 00, not 24', () => {
+        expect(formatMarketTime('2026-10-26T04:00:00Z')).toBe('00:00:00');
+    });
+
+    it('should format the date in Eastern time', () => {
+        expect(formatMarketDate(morning)).toBe('Oct 26');
+    });
+
+    it('should use the Eastern day even when UTC is already on the next day', () => {
+        expect(formatMarketDate('2026-10-27T02:00:00Z')).toBe('Oct 26');
+        expect(marketDayKey('2026-10-27T02:00:00Z')).toBe('2026-10-26');
+    });
+
+    it('should accept dates and epoch milliseconds too', () => {
+        expect(marketDayKey(new Date(morning))).toBe('2026-10-26');
+        expect(marketDayKey(Date.parse(morning))).toBe('2026-10-26');
     });
 });

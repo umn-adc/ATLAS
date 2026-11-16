@@ -13,11 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BacktestingIndexRouteImport } from './routes/backtesting/index'
 import { Route as DataIndexRouteImport } from './routes/data/index'
 import { Route as DeploymentsIndexRouteImport } from './routes/deployments/index'
-import { Route as LogsIndexRouteImport } from './routes/logs/index'
 import { Route as MonitoringIndexRouteImport } from './routes/monitoring/index'
 import { Route as RiskIndexRouteImport } from './routes/risk/index'
 import { Route as SettingsIndexRouteImport } from './routes/settings/index'
 import { Route as StrategiesIndexRouteImport } from './routes/strategies/index'
+import { Route as StrategiesIdLiveRouteImport } from './routes/strategies/$id/live'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -37,11 +37,6 @@ const DataIndexRoute = DataIndexRouteImport.update({
 const DeploymentsIndexRoute = DeploymentsIndexRouteImport.update({
   id: '/deployments/',
   path: '/deployments/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LogsIndexRoute = LogsIndexRouteImport.update({
-  id: '/logs/',
-  path: '/logs/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MonitoringIndexRoute = MonitoringIndexRouteImport.update({
@@ -64,28 +59,33 @@ const StrategiesIndexRoute = StrategiesIndexRouteImport.update({
   path: '/strategies/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StrategiesIdLiveRoute = StrategiesIdLiveRouteImport.update({
+  id: '/strategies/$id/live',
+  path: '/strategies/$id/live',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/backtesting/': typeof BacktestingIndexRoute
   '/data/': typeof DataIndexRoute
   '/deployments/': typeof DeploymentsIndexRoute
-  '/logs/': typeof LogsIndexRoute
   '/monitoring/': typeof MonitoringIndexRoute
   '/risk/': typeof RiskIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/strategies/': typeof StrategiesIndexRoute
+  '/strategies/$id/live': typeof StrategiesIdLiveRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/backtesting': typeof BacktestingIndexRoute
   '/data': typeof DataIndexRoute
   '/deployments': typeof DeploymentsIndexRoute
-  '/logs': typeof LogsIndexRoute
   '/monitoring': typeof MonitoringIndexRoute
   '/risk': typeof RiskIndexRoute
   '/settings': typeof SettingsIndexRoute
   '/strategies': typeof StrategiesIndexRoute
+  '/strategies/$id/live': typeof StrategiesIdLiveRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -93,11 +93,11 @@ export interface FileRoutesById {
   '/backtesting/': typeof BacktestingIndexRoute
   '/data/': typeof DataIndexRoute
   '/deployments/': typeof DeploymentsIndexRoute
-  '/logs/': typeof LogsIndexRoute
   '/monitoring/': typeof MonitoringIndexRoute
   '/risk/': typeof RiskIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/strategies/': typeof StrategiesIndexRoute
+  '/strategies/$id/live': typeof StrategiesIdLiveRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -106,33 +106,33 @@ export interface FileRouteTypes {
     | '/backtesting/'
     | '/data/'
     | '/deployments/'
-    | '/logs/'
     | '/monitoring/'
     | '/risk/'
     | '/settings/'
     | '/strategies/'
+    | '/strategies/$id/live'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/backtesting'
     | '/data'
     | '/deployments'
-    | '/logs'
     | '/monitoring'
     | '/risk'
     | '/settings'
     | '/strategies'
+    | '/strategies/$id/live'
   id:
     | '__root__'
     | '/'
     | '/backtesting/'
     | '/data/'
     | '/deployments/'
-    | '/logs/'
     | '/monitoring/'
     | '/risk/'
     | '/settings/'
     | '/strategies/'
+    | '/strategies/$id/live'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -140,11 +140,11 @@ export interface RootRouteChildren {
   BacktestingIndexRoute: typeof BacktestingIndexRoute
   DataIndexRoute: typeof DataIndexRoute
   DeploymentsIndexRoute: typeof DeploymentsIndexRoute
-  LogsIndexRoute: typeof LogsIndexRoute
   MonitoringIndexRoute: typeof MonitoringIndexRoute
   RiskIndexRoute: typeof RiskIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
   StrategiesIndexRoute: typeof StrategiesIndexRoute
+  StrategiesIdLiveRoute: typeof StrategiesIdLiveRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -177,13 +177,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DeploymentsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/logs/': {
-      id: '/logs/'
-      path: '/logs'
-      fullPath: '/logs/'
-      preLoaderRoute: typeof LogsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/monitoring/': {
       id: '/monitoring/'
       path: '/monitoring'
@@ -212,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StrategiesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/strategies/$id/live': {
+      id: '/strategies/$id/live'
+      path: '/strategies/$id/live'
+      fullPath: '/strategies/$id/live'
+      preLoaderRoute: typeof StrategiesIdLiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -220,11 +220,11 @@ const rootRouteChildren: RootRouteChildren = {
   BacktestingIndexRoute: BacktestingIndexRoute,
   DataIndexRoute: DataIndexRoute,
   DeploymentsIndexRoute: DeploymentsIndexRoute,
-  LogsIndexRoute: LogsIndexRoute,
   MonitoringIndexRoute: MonitoringIndexRoute,
   RiskIndexRoute: RiskIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
   StrategiesIndexRoute: StrategiesIndexRoute,
+  StrategiesIdLiveRoute: StrategiesIdLiveRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
