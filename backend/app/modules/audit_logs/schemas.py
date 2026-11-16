@@ -3,21 +3,7 @@ from typing import Any
 from uuid import UUID
 from enum import Enum, IntEnum
 
-from pydantic import BaseModel, Field
-
-# the actor of an audit log event
-class Actor(BaseModel):
-    model_config = ConfigDict(frozen=True) # enforces unchangeable records
-    id: UUID # what specific entity performed the action
-    type: str # what kind of entity performed the action (e.g. user, service, system)
-    ip_address: str | None = None
-    # user_agent: str | None = None # stores HTTP User-Agent header from request that triggered action
-    
-# target of an audit log event
-class Target(BaseModel):
-    model_config = ConfigDict(frozen=True) # enforces unchangeable records
-    id: UUID
-    type: str # type of target (e.g. invoice, user)
+from pydantic import BaseModel, Field, ConfigDict
 
 # outcome of an audit log event
 class Outcome(str, Enum): # Enum forces Outcome to only be one of the 3 possible values listed
@@ -33,14 +19,16 @@ class WarningLevel(IntEnum):
 
 # a singular audit log event
 class AuditEvent(BaseModel):
-    model_config = ConfigDict(frozen=True, extra="forbid") # 2nd field tells Pydantic to reject any input fields that weren't declared
+    model_config = ConfigDict(frozen=True, extra="forbid", from_attributes=True) # 2nd field tells Pydantic to reject any input fields that weren't declared
     id: UUID # unique id
     action: str # what
-    actor: Actor # who
-    target: Target | None = None # to what
+    actor_id: UUID # who
+    actor_type: type # what kind of entity performed the action (e.g. user, service, system)
+    target: UUID | None = None # to what
+    target_type: str | None = None # type of target (e.g. invoice, user)
     outcome: Outcome
     timestamp: datetime # when
-    details: dict # JSON - old/new values
+    details: dict | None = None # JSON - old/new values
     warning_level: WarningLevel # degree of severity/attention needed
     schema_version: int = 1 # records iterations of schema
 
@@ -49,6 +37,6 @@ class AuditEventCreate(BaseModel):
     model_config = ConfigDict(extra="forbid") # 2nd field tells Pydantic to reject any input fields that weren't declared
 
     action: str
-    actor: Actor
-    target: Target | None = None
+    target: UUID | None = None # to what
+    target_type: str | None = None # type of target (e.g. invoice, user)
     outcome: Outcome

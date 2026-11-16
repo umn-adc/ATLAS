@@ -33,7 +33,7 @@ class AuditEvent(Base):
     actor_type: Mapped[str] = mapped_column(String(TYPE_MAX_LEN), nullable=False)
 
     # separated for easier usage
-    target_id: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"), nullable=False)
+    target_id: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
     target_type: Mapped[str | None] = mapped_column(String(TYPE_MAX_LEN))
 
     # success, failure, or denied
