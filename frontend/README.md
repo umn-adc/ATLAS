@@ -31,7 +31,6 @@ Routes are files in `src/routes/`. The file path is the URL:
 | `src/routes/about.tsx`            | `/about`          |
 | `src/routes/strategies/index.tsx` | `/strategies`     |
 | `src/routes/strategies/$id.tsx`   | `/strategies/:id` |
-| `src/routes/strategies/$id/live.tsx` | `/strategies/:id/live` |
 
 - `src/routes/__root.tsx` is the layout that wraps every page (header, footer, 404).
 - Each route file must export `const Route = createFileRoute(...)`. The path string is filled in automatically, so don't edit it by hand.

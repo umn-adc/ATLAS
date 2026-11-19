@@ -1,0 +1,17 @@
+site_name: Options Pricing
+
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: false
+
+nav:
+  - Pricing:
+      - Black-Scholes: api/black_scholes.md
+      - Greeks: api/greeks.md
+      - Implied Volatility: api/implied_volatility.md
+      - Payoff: api/payoff.md
+      - Moneyness: api/moneyness.md
+      - Schemas: api/schemas.md

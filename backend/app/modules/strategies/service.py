@@ -47,15 +47,7 @@ class StrategyService:
 
         Raises ValueError if strategy not found or user doesn't own it.
         """
-        strategy = self.get_strategy(strategy_id, user_id)
-
-        # Only overwrite fields the caller actually provided
-        if data.name is not None:
-            strategy.name = data.name
-        if data.description is not None:
-            strategy.description = data.description
-
-        return self.repository.update(strategy)
+        raise NotImplementedError
 
     # beginner
     def archive_strategy(self, strategy_id: UUID, user_id: UUID) -> Strategy:
@@ -63,9 +55,7 @@ class StrategyService:
 
         Raises ValueError if strategy not found or user doesn't own it.
         """
-        strategy = self.get_strategy(strategy_id, user_id)
-        strategy.archived_at = datetime.now(timezone.utc)
-        return self.repository.update(strategy)
+        raise NotImplementedError
 
     # ADVANCED TASKS - implement repository + service + router
 

@@ -3,7 +3,7 @@
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status
 
 from app.modules.users.dependencies import get_users_service
 from app.modules.users.schemas import UserCreate, User, UserUpdate, UserPasswordUpdate
@@ -127,12 +127,7 @@ async def delete_user(
     Raises:
         404: User not found
     """
-    try:
-        await service.delete_user(user_id)
-    except ValueError:
-        raise HTTPException(status_code=404, detail="User not found")
-    else:
-        return status.HTTP_204_NO_CONTENT
+    await service.delete_user(user_id)
 
 
 @router.post(

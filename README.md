@@ -9,7 +9,7 @@
 
 The platform is designed to run on a local machine or server, with team members accessing the same instance through their browsers.
 
-![ATLAS Dashboard](Strategy%20detail.png)
+![ATLAS Dashboard](ATLAS%20Dashboard.png)
 
 See [Project Documentation](https://docs.google.com/document/d/1xfD-a51XLQYDKf0SW4yrSjkkpkeMbbOo0Hi6VfGp0M4/edit?usp=sharing) for architecture details.
 
@@ -67,16 +67,9 @@ uv run alembic upgrade head && uv run alembic check  # Verify migrations in sync
 
 ## Documentation
 
-Docs live in a `docs/` folder next to the code they describe. Project-wide docs live in the root [`docs/`](docs/).
+Project documentation is maintained with MkDocs.
 
-- **atlasdaemon** (live trading daemon)
-  - [Message Bus](atlasdaemon/docs/message_bus.md)
-- **atlas_sdk** (what strategies import)
-  - [Protocol](atlas_sdk/docs/protocol.md)
-  - [Broker Adapters](atlas_sdk/docs/broker_adapters.md)
-- [CLI](cli/README.md)
-- [Frontend](frontend/README.md)
-- [Options Analytics](backend/packages/options_analytics/README.md)
+Documentation covers architecture, development setup, module interfaces, and contributor onboarding as these areas are developed.
 
 ## License
 GPLv3
