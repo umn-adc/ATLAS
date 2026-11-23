@@ -49,7 +49,7 @@ class Connection:
         Implementation:
             Append to self._control and set self._ready.
         """
-        # TODO: implement
+        #Ignore for now
         raise NotImplementedError
 
     def push_data(self, message: dict[str, Any]) -> None:
@@ -60,13 +60,14 @@ class Connection:
             If self._data is already at maxlen, increment self.dropped.
             Append to self._data (the deque drops the oldest for you) and set self._ready.
         """
-        # TODO: implement
-        raise NotImplementedError
+        if (len(self._data) == self._data.maxlen):
+            self.dropped += 1
+        self._data.append(message)
+        self._ready.set()
 
     def pending(self) -> int:
         """Number of messages waiting to be sent."""
-        # TODO: implement (control + data)
-        raise NotImplementedError
+        return (len(self._control) + len(self._data))
 
     async def next_message(self) -> dict[str, Any]:
         """
@@ -76,8 +77,14 @@ class Connection:
             Loop: pop from self._control if non-empty, else from self._data if
             non-empty, else clear self._ready and await self._ready.wait().
         """
-        # TODO: implement
-        raise NotImplementedError
+        while True:
+            if (len(self._control) > 0):
+                return self._control.popleft()
+            elif (len(self._data) > 0):
+                return self._data.popleft()
+            else:
+                self._ready.clear()
+                await self._ready.wait()
 
 
 class StreamRouter:
