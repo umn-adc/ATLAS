@@ -94,7 +94,7 @@ class UserService:
             Call repository list_all with the include_inactive flag.
             Return the result directly.
         """
-        raise NotImplementedError
+        return self.repository.list_all(include_inactive)
 
     async def update_user(self, user_id: UUID, data: UserUpdate) -> User:
         """
@@ -160,7 +160,11 @@ class UserService:
             Fetch user from repository by ID, raise if not found.
             Call repository delete method.
         """
-        raise NotImplementedError
+        user = repository.get_by_id(user_id)
+        if (user != None):
+            await self.repository.delete_user(user)
+        else:
+            raise ValueError("User does not exist")
 
     async def deactivate_user(self, user_id: UUID) -> User:
         """

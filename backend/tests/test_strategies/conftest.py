@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 
 from app.database.models_base import Base
 from app.modules.strategies.service import StrategyService
+from app.modules.users.models import User  # noqa: F401  registers the "users" table
 
 # === Database Fixtures (for repository tests) ===
 

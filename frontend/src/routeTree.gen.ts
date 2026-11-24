@@ -10,17 +10,48 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AboutRouteImport } from './routes/about'
+import { Route as BacktestingIndexRouteImport } from './routes/backtesting/index'
+import { Route as DataIndexRouteImport } from './routes/data/index'
+import { Route as DeploymentsIndexRouteImport } from './routes/deployments/index'
+import { Route as MonitoringIndexRouteImport } from './routes/monitoring/index'
+import { Route as RiskIndexRouteImport } from './routes/risk/index'
+import { Route as SettingsIndexRouteImport } from './routes/settings/index'
 import { Route as StrategiesIndexRouteImport } from './routes/strategies/index'
+import { Route as StrategiesIdLiveRouteImport } from './routes/strategies/$id/live'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const BacktestingIndexRoute = BacktestingIndexRouteImport.update({
+  id: '/backtesting/',
+  path: '/backtesting/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataIndexRoute = DataIndexRouteImport.update({
+  id: '/data/',
+  path: '/data/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeploymentsIndexRoute = DeploymentsIndexRouteImport.update({
+  id: '/deployments/',
+  path: '/deployments/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonitoringIndexRoute = MonitoringIndexRouteImport.update({
+  id: '/monitoring/',
+  path: '/monitoring/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RiskIndexRoute = RiskIndexRouteImport.update({
+  id: '/risk/',
+  path: '/risk/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsIndexRoute = SettingsIndexRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StrategiesIndexRoute = StrategiesIndexRouteImport.update({
@@ -28,35 +59,92 @@ const StrategiesIndexRoute = StrategiesIndexRouteImport.update({
   path: '/strategies/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StrategiesIdLiveRoute = StrategiesIdLiveRouteImport.update({
+  id: '/strategies/$id/live',
+  path: '/strategies/$id/live',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/backtesting/': typeof BacktestingIndexRoute
+  '/data/': typeof DataIndexRoute
+  '/deployments/': typeof DeploymentsIndexRoute
+  '/monitoring/': typeof MonitoringIndexRoute
+  '/risk/': typeof RiskIndexRoute
+  '/settings/': typeof SettingsIndexRoute
   '/strategies/': typeof StrategiesIndexRoute
+  '/strategies/$id/live': typeof StrategiesIdLiveRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/backtesting': typeof BacktestingIndexRoute
+  '/data': typeof DataIndexRoute
+  '/deployments': typeof DeploymentsIndexRoute
+  '/monitoring': typeof MonitoringIndexRoute
+  '/risk': typeof RiskIndexRoute
+  '/settings': typeof SettingsIndexRoute
   '/strategies': typeof StrategiesIndexRoute
+  '/strategies/$id/live': typeof StrategiesIdLiveRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/backtesting/': typeof BacktestingIndexRoute
+  '/data/': typeof DataIndexRoute
+  '/deployments/': typeof DeploymentsIndexRoute
+  '/monitoring/': typeof MonitoringIndexRoute
+  '/risk/': typeof RiskIndexRoute
+  '/settings/': typeof SettingsIndexRoute
   '/strategies/': typeof StrategiesIndexRoute
+  '/strategies/$id/live': typeof StrategiesIdLiveRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/strategies/'
+  fullPaths:
+    | '/'
+    | '/backtesting/'
+    | '/data/'
+    | '/deployments/'
+    | '/monitoring/'
+    | '/risk/'
+    | '/settings/'
+    | '/strategies/'
+    | '/strategies/$id/live'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/strategies'
-  id: '__root__' | '/' | '/about' | '/strategies/'
+  to:
+    | '/'
+    | '/backtesting'
+    | '/data'
+    | '/deployments'
+    | '/monitoring'
+    | '/risk'
+    | '/settings'
+    | '/strategies'
+    | '/strategies/$id/live'
+  id:
+    | '__root__'
+    | '/'
+    | '/backtesting/'
+    | '/data/'
+    | '/deployments/'
+    | '/monitoring/'
+    | '/risk/'
+    | '/settings/'
+    | '/strategies/'
+    | '/strategies/$id/live'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  BacktestingIndexRoute: typeof BacktestingIndexRoute
+  DataIndexRoute: typeof DataIndexRoute
+  DeploymentsIndexRoute: typeof DeploymentsIndexRoute
+  MonitoringIndexRoute: typeof MonitoringIndexRoute
+  RiskIndexRoute: typeof RiskIndexRoute
+  SettingsIndexRoute: typeof SettingsIndexRoute
   StrategiesIndexRoute: typeof StrategiesIndexRoute
+  StrategiesIdLiveRoute: typeof StrategiesIdLiveRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,11 +156,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/backtesting/': {
+      id: '/backtesting/'
+      path: '/backtesting'
+      fullPath: '/backtesting/'
+      preLoaderRoute: typeof BacktestingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data/': {
+      id: '/data/'
+      path: '/data'
+      fullPath: '/data/'
+      preLoaderRoute: typeof DataIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deployments/': {
+      id: '/deployments/'
+      path: '/deployments'
+      fullPath: '/deployments/'
+      preLoaderRoute: typeof DeploymentsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monitoring/': {
+      id: '/monitoring/'
+      path: '/monitoring'
+      fullPath: '/monitoring/'
+      preLoaderRoute: typeof MonitoringIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/risk/': {
+      id: '/risk/'
+      path: '/risk'
+      fullPath: '/risk/'
+      preLoaderRoute: typeof RiskIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/': {
+      id: '/settings/'
+      path: '/settings'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof SettingsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/strategies/': {
@@ -82,13 +205,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StrategiesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/strategies/$id/live': {
+      id: '/strategies/$id/live'
+      path: '/strategies/$id/live'
+      fullPath: '/strategies/$id/live'
+      preLoaderRoute: typeof StrategiesIdLiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  BacktestingIndexRoute: BacktestingIndexRoute,
+  DataIndexRoute: DataIndexRoute,
+  DeploymentsIndexRoute: DeploymentsIndexRoute,
+  MonitoringIndexRoute: MonitoringIndexRoute,
+  RiskIndexRoute: RiskIndexRoute,
+  SettingsIndexRoute: SettingsIndexRoute,
   StrategiesIndexRoute: StrategiesIndexRoute,
+  StrategiesIdLiveRoute: StrategiesIdLiveRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
