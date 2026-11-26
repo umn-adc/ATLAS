@@ -71,7 +71,7 @@ class Connection:
 
     async def next_message(self) -> dict[str, Any]:
         """
-        Wait for the next message to send. Control messages go first.
+        Consume next message to send. Control messages go first.
 
         Implementation:
             Loop: pop from self._control if non-empty, else from self._data if
