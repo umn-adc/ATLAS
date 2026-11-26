@@ -110,8 +110,9 @@ class StreamRouter:
         Returns:
             Connection: A new connection with an empty queue and no topics
         """
-        # TODO: implement
-        raise NotImplementedError
+        conn = Connection(self._max_queue)
+        self._connections.add(conn)
+        return conn
 
     def disconnect(self, conn: Connection) -> None:
         """
@@ -119,8 +120,10 @@ class StreamRouter:
 
         Must be safe to call more than once for the same connection.
         """
-        # TODO: implement (unsubscribe from every topic in conn.topics, then forget conn)
-        raise NotImplementedError
+        if conn in self._connections:
+            for topic in conn.topics:
+                self.unsubscribe(conn, topic)
+            self._connections.remove(conn)
 
     @property
     def connection_count(self) -> int:
@@ -135,8 +138,11 @@ class StreamRouter:
         Raises:
             TooManyTopicsError: If the connection is already at self._max_topics
         """
-        # TODO: implement (update both conn.topics and self._subscribers)
-        raise NotImplementedError
+        if topic not in conn.topics:
+            if len(conn.topics) >= self._max_topics:
+                raise TooManyTopicsError
+            conn.topics.add(topic)
+            self._subscribers[topic].add(conn)
 
     def unsubscribe(self, conn: Connection, topic: str) -> None:
         """
@@ -146,13 +152,17 @@ class StreamRouter:
             Remove from both conn.topics and self._subscribers[topic].
             Delete the topic key when its last subscriber leaves so the map doesn't grow forever.
         """
-        # TODO: implement
-        raise NotImplementedError
+        if topic in conn.topics:
+            conn.topics.remove(topic)
+            self._subscribers[topic].remove(conn)
+            if len(self._subscribers[topic]) == 0:
+                self._subscribers.pop(topic)
 
     def subscriber_count(self, topic: str) -> int:
         """How many connections are subscribed to `topic`."""
-        # TODO: implement (careful: don't create an empty entry in the defaultdict)
-        raise NotImplementedError
+        if topic in self._subscribers:
+            return len(self._subscribers[topic])
+        return 0
 
     # --- publishing ---
 
@@ -171,6 +181,8 @@ class StreamRouter:
             and turn it into a dict with .model_dump(mode="json"). Build it once, not per conn.
             push_data() it onto each subscriber's Connection.
         """
-        # TODO: implement
+        # TODO: waiting on schemas.py DataMessage implementation
         # TODO (later): cache the last message per topic and send it on subscribe (snapshot)
         raise NotImplementedError
+
+        
